@@ -51,7 +51,7 @@ public class Triangle {
      * @param bc length from point b c.
      * @return
      */
-    private boolean exist(double ab, double ac, double bc){
-        return true;
+    private boolean exist(double ab, double ac, double bc) {
+        return ((ab + bc) > ac) && ((ab + bc) > ac) && ((ab + bc) > ac) ? true : false;
     }
 }
