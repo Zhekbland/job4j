@@ -1,6 +1,18 @@
 package ru.job4j.loop;
 
+/**
+ * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
+ * @version &Id&
+ * @since  0.1
+ */
 public class Board {
+
+    /**
+     * Create a chess board
+     * @param height of the pyramid.
+     * @param width of the pyramid.
+     * @return Screen.
+     */
     public String paint(int width, int height) {
         StringBuilder screen = new StringBuilder();
         String ln = System.lineSeparator();

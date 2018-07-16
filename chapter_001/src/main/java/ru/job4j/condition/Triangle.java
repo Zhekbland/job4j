@@ -23,7 +23,7 @@ public class Triangle {
      * @param bc is distance between points b c.
      * @return Perimeter.
      */
-    public double period(double ab, double ac, double bc){
+    public double period(double ab, double ac, double bc) {
         return (ab + ac + bc) / 2;
     }
 
@@ -32,7 +32,7 @@ public class Triangle {
      *
      * @return area of triangle if exist else -1
      */
-    public double area(){
+    public double area() {
         double rsl = -1;
         double ab = this.a.distanceTo(this.b);
         double ac = this.a.distanceTo(this.c);
@@ -51,7 +51,7 @@ public class Triangle {
      * @param bc length from point b c.
      * @return
      */
-    private boolean exist(double ab, double ac, double bc){
+    private boolean exist(double ab, double ac, double bc) {
         return ((ab + ac) > bc) && ((ab + bc) > ac) && ((ac + bc) > ab);
     }
 }
