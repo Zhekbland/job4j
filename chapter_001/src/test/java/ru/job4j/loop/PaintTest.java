@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 /**
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
- * @version &Id&
+ * @version $Id$
  * @since  0.1
  */
 public class PaintTest {
@@ -75,7 +75,7 @@ public class PaintTest {
         Paint paint = new Paint();
         String rst = paint.pyramid(2);
         final String line = System.getProperty("line.separator");
-        String expected = String.format(" ^ %s^^^%s", line, line, line);
+        String expected = String.format(" ^ %s^^^%s", line, line);
         assertThat(rst, is(expected));
     }
 }

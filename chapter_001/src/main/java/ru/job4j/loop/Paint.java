@@ -2,7 +2,7 @@ package ru.job4j.loop;
 
 /**
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
- * @version &Id&
+ * @version $Id$
  * @since  0.1
  */
 public class Paint {
