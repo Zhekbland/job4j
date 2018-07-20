@@ -18,11 +18,16 @@ public class ArrayChar {
     public boolean startWith(String prefix) {
         boolean result = true;
         char[] value = prefix.toCharArray();
-            if ((value[0] == data[0]) && (value[1] == data[1])) {
-                result = true;
+        for (int index = 0; index < data.length - 1; index++) {
+            if (value[index] == data[index]) {
+                if (value[value.length - 1] == value[index]) {
+                    break;
+                }
             } else {
                 result = false;
+                break;
             }
+        }
         return result;
     }
 }
