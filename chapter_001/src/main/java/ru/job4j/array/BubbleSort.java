@@ -13,16 +13,12 @@ public class BubbleSort {
      * @return array after bubble sort.
      */
     public int[] sort(int[] array) {
-        int temp = 0;
         for (int index = 0; index < array.length - 1; index++) {
-            if (array[index] > array[index + 1] || array[0] > array[1]) {
-                index = 0;
-                for (int index2 = 0; index2 < array.length - 1; index2++) {
-                    if (array[index2] > array[index2 + 1]) {
-                        temp = array[index2];
-                        array[index2] = array[index2 + 1];
-                        array[index2 + 1] = temp;
-                    }
+            for (int index2 = 0; index2 < array.length - index - 1; index2++) {
+                if (array[index2] > array[index2 + 1]) {
+                    int temp = array[index2];
+                    array[index2] = array[index2 + 1];
+                    array[index2 + 1] = temp;
                 }
             }
         }
