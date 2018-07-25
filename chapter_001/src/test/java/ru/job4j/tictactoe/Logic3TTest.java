@@ -42,9 +42,31 @@ public class Logic3TTest {
     @Test
     public void whenHasGas2() {
         Figure3T[][] table = {
+                {new Figure3T(), new Figure3T(false), new Figure3T(false)},
+                {new Figure3T(false), new Figure3T(true), new Figure3T(true)},
+                {new Figure3T(true), new Figure3T(), new Figure3T(false)},
+        };
+        Logic3T login = new Logic3T(table);
+        assertThat(login.hasGap(), is(true));
+    }
+
+    @Test
+    public void whenHasGas3() {
+        Figure3T[][] table = {
                 {new Figure3T(true), new Figure3T(), new Figure3T()},
                 {new Figure3T(), new Figure3T(true), new Figure3T()},
                 {new Figure3T(), new Figure3T(), new Figure3T(true)},
+        };
+        Logic3T login = new Logic3T(table);
+        assertThat(login.hasGap(), is(true));
+    }
+
+    @Test
+    public void whenHasGas4() {
+        Figure3T[][] table = {
+                {new Figure3T(), new Figure3T(false), new Figure3T()},
+                {new Figure3T(false), new Figure3T(), new Figure3T(true)},
+                {new Figure3T(true), new Figure3T(), new Figure3T(false)},
         };
         Logic3T login = new Logic3T(table);
         assertThat(login.hasGap(), is(true));

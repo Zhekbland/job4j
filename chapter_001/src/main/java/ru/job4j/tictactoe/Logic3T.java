@@ -7,7 +7,7 @@ public class Logic3T {
         this.table = table;
     }
 
-    public boolean checkWinnerHorizontalX() {
+    private boolean checkWinnerHorizontalX() {
         boolean result = true;
         for (int row = 0; row < table.length; row++) {
             result = true;
@@ -24,7 +24,7 @@ public class Logic3T {
         return result;
     }
 
-    public boolean checkWinnerVerticalX() {
+    private boolean checkWinnerVerticalX() {
         boolean result = true;
         for (int col = 0; col < table.length; col++) {
             result = true;
@@ -41,7 +41,7 @@ public class Logic3T {
         return result;
     }
 
-    public boolean checkWinnerDiagonalX() {
+    private boolean checkWinnerDiagonalX() {
         boolean result = true;
         for (int row = 0; row < table.length - 1; row++) {
             result = true;
@@ -58,7 +58,7 @@ public class Logic3T {
         return result;
     }
 
-    public boolean checkWinnerDiagonalXreturn() {
+    private boolean checkWinnerDiagonalXdifferent() {
         boolean result = true;
         for (int row = 0; row < table.length - 1; row++) {
             result = true;
@@ -75,7 +75,7 @@ public class Logic3T {
         return result;
     }
 
-    public boolean checkWinnerHorizontalO() {
+    private boolean checkWinnerHorizontalO() {
         boolean result = true;
         for (int row = 0; row < table.length; row++) {
             result = true;
@@ -92,7 +92,7 @@ public class Logic3T {
         return result;
     }
 
-    public boolean checkWinnerVerticalO() {
+    private boolean checkWinnerVerticalO() {
         boolean result = true;
         for (int col = 0; col < table.length; col++) {
             result = true;
@@ -109,7 +109,7 @@ public class Logic3T {
         return result;
     }
 
-    public boolean checkWinnerDiagonalO() {
+    private boolean checkWinnerDiagonalO() {
         boolean result = true;
         for (int row = 0; row < table.length - 1; row++) {
             result = true;
@@ -126,7 +126,7 @@ public class Logic3T {
         return result;
     }
 
-    public boolean checkWinnerDiagonalOreturn() {
+    private boolean checkWinnerDiagonalOdifferent() {
         boolean result = true;
         for (int row = 0; row < table.length - 1; row++) {
             result = true;
@@ -145,29 +145,28 @@ public class Logic3T {
 
     public boolean isWinnerX() {
         return checkWinnerVerticalX() || checkWinnerHorizontalX()
-                || checkWinnerDiagonalX() || checkWinnerDiagonalXreturn();
+                || checkWinnerDiagonalX() || checkWinnerDiagonalXdifferent();
     }
 
     public boolean isWinnerO() {
         return checkWinnerVerticalO() || checkWinnerHorizontalO()
-                || checkWinnerDiagonalO() || checkWinnerDiagonalOreturn();
+                || checkWinnerDiagonalO() || checkWinnerDiagonalOdifferent();
     }
 
     public boolean hasGap() {
         boolean result = true;
+        int countX = 0;
+        int countO = 0;
         for (int col = 0; col < table.length; col++) {
-            result = true;
-            for (int row = 0; row < table.length - 1; row++) {
-                if (checkWinnerVerticalX() == checkWinnerHorizontalX()
-                        == checkWinnerDiagonalX() == checkWinnerDiagonalXreturn()
-                        == checkWinnerVerticalO() == checkWinnerHorizontalO()
-                        == checkWinnerDiagonalO() == checkWinnerDiagonalOreturn() && (table[col][row].hasMarkX())) {
-                    result = false;
-                    break;
+            for (int row = 0; row < table.length; row++) {
+                if (table[col][row].hasMarkX()) {
+                    countX = countX + 1;
+                } else if (table[col][row].hasMarkO()) {
+                    countO = countO + 1;
                 }
-            }
-            if (result) {
-                break;
+                if ((countO == 4 && countX == 5) || (countO == 5 && countX == 4)) {
+                    result = false;
+                }
             }
         }
         return result;
