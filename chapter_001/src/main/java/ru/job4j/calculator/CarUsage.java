@@ -1,6 +1,17 @@
 package ru.job4j.calculator;
 
+/**
+ * Class CarUsage checks can i drive and how many km may drive.
+ * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
+ * @version $Id$
+ * @since  0.1
+ */
 public class CarUsage {
+
+    /**
+     * To screen can i drive and how many km may drive.
+     * @param args .
+     */
     public static void main(String[] args) {
         Car audi = new Car();
         boolean driving = audi.canDrive();

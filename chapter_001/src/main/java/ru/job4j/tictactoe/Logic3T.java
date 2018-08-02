@@ -1,5 +1,11 @@
 package ru.job4j.tictactoe;
 
+/**
+ * Class Logic3T describe logic of games TicTacToe.
+ * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
+ * @version $Id$
+ * @since  0.1
+ */
 public class Logic3T {
     private final Figure3T[][] table;
 
@@ -7,6 +13,10 @@ public class Logic3T {
         this.table = table;
     }
 
+    /**
+     * Checks is X win on Horizontal.
+     * @return won or lost.
+     */
     private boolean checkWinnerHorizontalX() {
         boolean result = true;
         for (int row = 0; row < table.length; row++) {
@@ -24,6 +34,10 @@ public class Logic3T {
         return result;
     }
 
+    /**
+     * Checks is X win on Vertical.
+     * @return won or lost.
+     */
     private boolean checkWinnerVerticalX() {
         boolean result = true;
         for (int col = 0; col < table.length; col++) {
@@ -41,6 +55,10 @@ public class Logic3T {
         return result;
     }
 
+    /**
+     * Checks is X win on Diagonal.
+     * @return won or lost.
+     */
     private boolean checkWinnerDiagonalX() {
         boolean result = true;
         for (int row = 0; row < table.length - 1; row++) {
@@ -58,6 +76,10 @@ public class Logic3T {
         return result;
     }
 
+    /**
+     * Checks is X win on Diagonal return.
+     * @return won or lost.
+     */
     private boolean checkWinnerDiagonalXdifferent() {
         boolean result = true;
         for (int row = 0; row < table.length - 1; row++) {
@@ -75,6 +97,10 @@ public class Logic3T {
         return result;
     }
 
+    /**
+     * Checks is O win on Horizontal.
+     * @return won or lost.
+     */
     private boolean checkWinnerHorizontalO() {
         boolean result = true;
         for (int row = 0; row < table.length; row++) {
@@ -92,6 +118,10 @@ public class Logic3T {
         return result;
     }
 
+    /**
+     * Checks is O win on Vertical.
+     * @return won or lost.
+     */
     private boolean checkWinnerVerticalO() {
         boolean result = true;
         for (int col = 0; col < table.length; col++) {
@@ -109,6 +139,10 @@ public class Logic3T {
         return result;
     }
 
+    /**
+     * Checks is O win on Diagonal.
+     * @return won or lost.
+     */
     private boolean checkWinnerDiagonalO() {
         boolean result = true;
         for (int row = 0; row < table.length - 1; row++) {
@@ -126,6 +160,10 @@ public class Logic3T {
         return result;
     }
 
+    /**
+     * Checks is O win on Diagonal return.
+     * @return won or lost.
+     */
     private boolean checkWinnerDiagonalOdifferent() {
         boolean result = true;
         for (int row = 0; row < table.length - 1; row++) {
@@ -143,16 +181,28 @@ public class Logic3T {
         return result;
     }
 
+    /**
+     * Checks is X win or lost.
+     * @return won or lost.
+     */
     public boolean isWinnerX() {
         return checkWinnerVerticalX() || checkWinnerHorizontalX()
                 || checkWinnerDiagonalX() || checkWinnerDiagonalXdifferent();
     }
 
+    /**
+     * Checks is O win or lost.
+     * @return won or lost.
+     */
     public boolean isWinnerO() {
         return checkWinnerVerticalO() || checkWinnerHorizontalO()
                 || checkWinnerDiagonalO() || checkWinnerDiagonalOdifferent();
     }
 
+    /**
+     * Checks if cells are full or not.
+     * @return full or not.
+     */
     public boolean hasGap() {
         boolean result = true;
         int countX = 0;

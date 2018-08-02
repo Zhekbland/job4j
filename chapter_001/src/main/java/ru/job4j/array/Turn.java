@@ -1,6 +1,7 @@
 package ru.job4j.array;
 
 /**
+ * Class Turn turns the array.
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
  * @version $Id$
  * @since  0.1

@@ -1,6 +1,7 @@
 package ru.job4j.loop;
 
 /**
+ * Class Board create a chess board.
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
  * @version &Id&
  * @since  0.1

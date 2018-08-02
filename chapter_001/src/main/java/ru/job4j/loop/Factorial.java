@@ -1,6 +1,7 @@
 package ru.job4j.loop;
 
 /**
+ * Class Factorial calculates factorial of values.
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
  * @version $Id$
  * @since 0.1

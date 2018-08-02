@@ -3,6 +3,7 @@ package ru.job4j.array;
 import java.util.Arrays;
 
 /**
+ * Class ArrayDuplicate for create the duplicate of array.
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
  * @version $Id$
  * @since  0.1

@@ -1,12 +1,15 @@
 package ru.job4j.loop;
 
 import java.util.function.BiPredicate;
+
 /**
+ * Class Paint paints pyramid.
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
  * @version $Id$
  * @since  0.1
  */
 public class Paint {
+
     /**
      * Create a pyramid
      * @param height Highest of the pyramid.
