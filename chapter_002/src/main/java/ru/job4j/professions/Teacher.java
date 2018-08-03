@@ -8,12 +8,6 @@ package ru.job4j.professions;
  */
 public class Teacher extends Profession {
 
-    public void name(Profession profession) {
-    }
-
-    public void profession(Profession profession) {
-    }
-
     public Teaching teach(Student student) {
         Teaching teaching = new Teaching();
         return teaching;

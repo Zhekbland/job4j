@@ -12,7 +12,7 @@ public class Profession {
 
     public String profession;
 
-    public Profession () {
+    public Profession() {
     }
 
     public Profession(String name, String profession) {

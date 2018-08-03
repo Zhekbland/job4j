@@ -8,12 +8,6 @@ package ru.job4j.professions;
  */
 public class Engineer extends Profession {
 
-    public void name(Profession profession) {
-    }
-
-    public void profession(Profession profession) {
-    }
-
     public Build house(House house) {
         Build build = new Build();
         return build;
