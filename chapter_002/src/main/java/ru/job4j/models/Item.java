@@ -7,9 +7,9 @@ public class Item {
     public String name;
     public String description;
     public long create;
+    private String id;
 
     public Item() {
-
     }
 
     public Item(String name, String description, long create) {
@@ -28,5 +28,13 @@ public class Item {
 
     public long getCreate() {
         return this.create;
+    }
+
+    public  String getId() {
+        return  this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
