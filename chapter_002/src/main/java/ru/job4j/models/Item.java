@@ -28,6 +28,10 @@ public class Item {
                 + "    item's id: " + id;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getName() {
         return this.name;
     }
