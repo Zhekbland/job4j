@@ -29,8 +29,10 @@ public class MenuTracker {
     }
 
     public List<Integer> numbersOfOperations() {
-        for (int i = 0; i < getActionsLength(); i++) {
-            range.add(i);
+        if (!(range.size() == actions.size())) {
+            for (int i = 0; i < getActionsLength(); i++) {
+                range.add(i);
+            }
         }
         return range;
     }
