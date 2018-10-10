@@ -65,21 +65,12 @@ public class MenuTracker {
         }
     }
 
-    private class AddItem implements UserAction {
-        private int add;
-        private String event;
+    private class AddItem extends BaseAction {
 
-        public AddItem(int add, String event) {
-            this.add = add;
-            this.event = event;
+        public AddItem(int key, String name) {
+            super(key, name);
         }
 
-        @Override
-        public int key() {
-            return add;
-        }
-
-        @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("----------Add new item-----------");
             String name = input.ask("Enter item'event name : ");
@@ -88,28 +79,14 @@ public class MenuTracker {
             tracker.add(item);
             System.out.println("---------New item with getId : " + item.toString() + " ----------");
         }
-
-        @Override
-        public String info() {
-            return String.format("%d. %s.", this.key(), event);
-        }
     }
 
-    private class ShowAllItem implements UserAction {
-        private int show;
-        private String event;
+    private class ShowAllItem extends BaseAction {
 
-        public ShowAllItem(int show, String event) {
-            this.show = show;
-            this.event = event;
+        public ShowAllItem(int key, String name) {
+            super(key, name);
         }
 
-        @Override
-        public int key() {
-            return show;
-        }
-
-        @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("------------ Show all items --------------");
             Item[] items = tracker.getAll();
@@ -121,28 +98,14 @@ public class MenuTracker {
                 System.out.println("You don't have any. Please, add items.");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%d. %s.", this.key(), event);
-        }
     }
 
-    private class EditItem implements UserAction {
-        private int edit;
-        private String event;
+    private class EditItem extends BaseAction {
 
-        public EditItem(int edit, String event) {
-            this.edit = edit;
-            this.event = event;
+        public EditItem(int key, String name) {
+            super(key, name);
         }
 
-        @Override
-        public int key() {
-            return edit;
-        }
-
-        @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("----------Add item'event id for edit-----------");
             String id = input.ask("Enter item'event id : ");
@@ -155,28 +118,14 @@ public class MenuTracker {
                 System.out.println("You entered wrong id, item wasn't edit.");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%d. %s.", this.key(), event);
-        }
     }
 
-    private class DeleteItem implements UserAction {
-        private int delete;
-        private String event;
+    private class DeleteItem extends BaseAction {
 
-        public DeleteItem(int delete, String event) {
-            this.delete = delete;
-            this.event = event;
+        public DeleteItem(int key, String name) {
+            super(key, name);
         }
 
-        @Override
-        public int key() {
-            return delete;
-        }
-
-        @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Enter item'event id for delete : ");
             if (tracker.delete(id)) {
@@ -185,28 +134,14 @@ public class MenuTracker {
                 System.out.println("Item not found");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%d. %s.", this.key(), event);
-        }
     }
 
-    private class FindByIdItem implements UserAction {
-        private int findById;
-        private String event;
+    private class FindByIdItem extends BaseAction {
 
-        public FindByIdItem(int findById, String event) {
-            this.findById = findById;
-            this.event = event;
+        public FindByIdItem(int key, String name) {
+            super(key, name);
         }
 
-        @Override
-        public int key() {
-            return findById;
-        }
-
-        @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Enter item'event id which you find : ");
             Item item = tracker.findById(id);
@@ -217,28 +152,14 @@ public class MenuTracker {
                 System.out.println("You enter wrong id!");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%d. %s.", this.key(), event);
-        }
     }
 
-    private class FindByNameItem implements UserAction {
-        private int findByName;
-        private String event;
+    private class FindByNameItem extends BaseAction {
 
-        public FindByNameItem(int findByName, String event) {
-            this.findByName = findByName;
-            this.event = event;
+        public FindByNameItem(int key, String name) {
+            super(key, name);
         }
 
-        @Override
-        public int key() {
-            return findByName;
-        }
-
-        @Override
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Enter item'event name which you find : ");
             Item[] items = tracker.findByName(name);
@@ -251,34 +172,15 @@ public class MenuTracker {
                 System.out.println("You entered wrong name. " + "Found " + items.length + " item/event");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%d. %s.", this.key(), event);
-        }
     }
 
-    private class ExitProgram implements UserAction {
-        private int exit;
-        private String event;
+    private class ExitProgram extends BaseAction {
 
-        public ExitProgram(int exit, String event) {
-            this.exit = exit;
-            this.event = event;
+        public ExitProgram(int key, String name) {
+            super(key, name);
         }
 
-        @Override
-        public int key() {
-            return exit;
-        }
-
-        @Override
         public void execute(Input input, Tracker tracker) {
-        }
-
-        @Override
-        public String info() {
-            return String.format("%d. %s.", this.key(), event);
         }
     }
 }
