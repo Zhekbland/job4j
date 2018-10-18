@@ -13,19 +13,14 @@ public class PriorityQueue {
     private LinkedList<Task> tasks = new LinkedList<>();
 
     public void put(Task task) {
-        if (tasks.size() > 0) {
-            for (int index = 0; index < tasks.size(); index++) {
-                if (tasks.get(index).getPriority() > task.getPriority()) {
-                    tasks.add(index, task);
-                    break;
-                } else if (index == (tasks.size() - 1)) {
-                    tasks.addLast(task);
+        int index = tasks.size();
+        for (int value = 0; value < tasks.size(); value++) {
+            if (tasks.get(value).getPriority() > task.getPriority()) {
+                index = value;
                     break;
                 }
-            }
-        } else {
-            tasks.add(task);
         }
+        tasks.add(index, task);
     }
 
     public Task take() {
