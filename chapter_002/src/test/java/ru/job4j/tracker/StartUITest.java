@@ -160,7 +160,7 @@ public class StartUITest {
                                 .append("4. Find item by Id.").append(System.lineSeparator())
                                 .append("5. Find items by name.").append(System.lineSeparator())
                                 .append("6. Exit from program.").append(System.lineSeparator())
-                                .append("Found 2 item/s").append(System.lineSeparator())
+                                .append("Found 2 item/event").append(System.lineSeparator())
                                 .append(item1.toString()).append(System.lineSeparator())
                                 .append(item3.toString()).append(System.lineSeparator())
                                 .toString()
