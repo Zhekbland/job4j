@@ -58,22 +58,26 @@ public class BankTransfer {
         return accounts;
     }
 
+    public Account findAccountByRequisites(String passport, String requisite) {
+        Account account = null;
+        for (Account findAccount : getUserAccounts(passport)) {
+            if (findAccount.getRequisites().equals(requisite)) {
+                account = findAccount;
+                break;
+            }
+        }
+        return account;
+    }
+
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport,
                                  String destRequisite, double amount) {
         boolean result = false;
-        for (Account accountSrc : getUserAccounts(srcPassport)) {
-            if (accountSrc.getRequisites().equals(srcRequisite)
-                    && accountSrc.getValue() >= amount) {
-                for (Account accountDest : getUserAccounts(destPassport)) {
-                    if (accountDest.getRequisites().equals(destRequisite)) {
-                        accountDest.setValue(accountDest.getValue() + amount);
-                        accountSrc.setValue(accountSrc.getValue() - amount);
-                        result = true;
-                        break;
-                    }
-                }
-                break;
-            }
+        Account srcAccount = findAccountByRequisites(srcPassport, srcRequisite);
+        Account destAccount = findAccountByRequisites(destPassport, destRequisite);
+        if (srcAccount.getValue() >= amount) {
+            srcAccount.setValue(srcAccount.getValue() - amount);
+            destAccount.setValue(destAccount.getValue() + amount);
+            result = true;
         }
         return result;
     }
