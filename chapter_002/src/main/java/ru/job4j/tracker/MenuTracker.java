@@ -4,6 +4,7 @@ import ru.job4j.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Class Tracker'event menu.
@@ -47,6 +48,9 @@ public class MenuTracker {
         this.actions.add(new ExitProgram(6, "Exit from program"));
     }
 
+    public void show(Consumer<List<UserAction>> consumer) {
+        consumer.accept(actions);
+    }
 
     /**
      * Method execute actions.

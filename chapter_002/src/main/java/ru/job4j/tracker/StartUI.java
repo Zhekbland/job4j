@@ -20,11 +20,15 @@ public class StartUI {
         this.tracker = tracker;
     }
 
+    public static void accept(List<UserAction> list) {
+        list.forEach(userAction -> System.out.println(userAction.info()));
+    }
+
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.fillActions();
         do {
-            menu.show();
+            menu.show(StartUI::accept);
             menu.select(input.ask("Select: ", menu.numbersOfOperations()));
         } while (!"y".equals(this.input.ask("Do you want to exit? (y): ")));
     }
