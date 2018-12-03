@@ -20,15 +20,20 @@ public class EvenIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        return values.length > index && (values[index] % 2 == 0);
+        boolean result = false;
+        for (int i = index; i < values.length; i++) {
+            if (values[i] % 2 == 0) {
+                result = true;
+                index = i;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
     public Object next() throws NoSuchElementException {
-        while (values.length > index && (values[index] % 2 != 0)) {
-            index++;
-        }
-        if (values.length <= index) {
+        if (!hasNext()) {
             throw new NoSuchElementException("No elements next.");
         }
         return values[index++];
