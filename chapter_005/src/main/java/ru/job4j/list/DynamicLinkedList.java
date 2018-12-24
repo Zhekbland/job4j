@@ -35,6 +35,10 @@ public class DynamicLinkedList<E> implements Iterable<E> {
         return result.value;
     }
 
+    public boolean isEmpty() {
+        return this.first == null;
+    }
+
     public E poll() {
         if (this.first == null) {
             throw new NullPointerException("Null!");

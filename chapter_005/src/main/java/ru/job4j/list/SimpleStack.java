@@ -1,8 +1,6 @@
 package ru.job4j.list;
 
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Class SimpleStack realizes Stack.
@@ -16,6 +14,10 @@ public class SimpleStack<T> implements Iterable<T> {
 
     public void push(T value) {
         this.stack.add(value);
+    }
+
+    public boolean isEmpty() {
+        return this.stack.isEmpty();
     }
 
     public T poll() {
