@@ -35,6 +35,17 @@ public class DynamicLinkedList<E> implements Iterable<E> {
         return result.value;
     }
 
+    public E poll() {
+        if (this.first == null) {
+            throw new NullPointerException("Null!");
+        }
+        Node<E> result = this.first;
+        this.first = this.first.next;
+        size--;
+        modCount++;
+        return result.value;
+    }
+
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
