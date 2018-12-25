@@ -8,8 +8,8 @@ import java.util.NoSuchElementException;
  * Class DynamicLinkedList realizes LinkedList.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
- * @since 14.12.2018.
+ * @version 2.
+ * @since 25.12.2018.
  */
 public class DynamicLinkedList<E> implements Iterable<E> {
     private Node<E> first;
@@ -48,6 +48,21 @@ public class DynamicLinkedList<E> implements Iterable<E> {
         size--;
         modCount++;
         return result.value;
+    }
+
+    public boolean hasCycle(Node first) {
+        boolean result = false;
+        Node slow = first;
+        Node fast = first;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow.equals(fast)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
