@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * Class DynamicArrayList realizes ArrayList (dynamic).
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 14.12.2018.
  */
 public class DynamicArrayList<E> implements Iterable<E> {
@@ -39,6 +39,10 @@ public class DynamicArrayList<E> implements Iterable<E> {
         }
         return (E) container[index];
 
+    }
+
+    public int getCapacity() {
+        return this.capacity;
     }
 
     @Override
