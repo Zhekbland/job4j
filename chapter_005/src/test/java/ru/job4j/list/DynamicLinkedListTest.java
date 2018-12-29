@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
  * Class DynamicLinkedListTest is testing DynamicLinkedList.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
- * @since 14.12.2018.
+ * @version 2.
+ * @since 25.12.2018.
  */
 public class DynamicLinkedListTest {
 
@@ -56,5 +56,45 @@ public class DynamicLinkedListTest {
         itr.next();
         list.add(4);
         itr.next();
+    }
+
+    @Test
+    public void whenWeHaveCycleAndGetTrue() {
+        DynamicLinkedList.Node first = new DynamicLinkedList.Node(1);
+        DynamicLinkedList.Node second = new DynamicLinkedList.Node(2);
+        DynamicLinkedList.Node third = new DynamicLinkedList.Node(3);
+        DynamicLinkedList.Node fourth = new DynamicLinkedList.Node(4);
+        first.next = second;
+        second.next = third;
+        third.next = fourth;
+        fourth.next = first;
+        boolean result = list.hasCycle(first);
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void whenWeDoNotHaveAndGetFalse() {
+        DynamicLinkedList.Node first = new DynamicLinkedList.Node(1);
+        DynamicLinkedList.Node second = new DynamicLinkedList.Node(2);
+        DynamicLinkedList.Node third = new DynamicLinkedList.Node(3);
+        DynamicLinkedList.Node fourth = new DynamicLinkedList.Node(4);
+        first.next = second;
+        second.next = third;
+        third.next = fourth;
+        boolean result = list.hasCycle(third);
+        assertThat(result, is(false));
+    }
+
+    @Test
+    public void whenWeHaveCycleInMiddleAndGetTrue() {
+        DynamicLinkedList.Node first = new DynamicLinkedList.Node(1);
+        DynamicLinkedList.Node second = new DynamicLinkedList.Node(2);
+        DynamicLinkedList.Node third = new DynamicLinkedList.Node(3);
+        DynamicLinkedList.Node fourth = new DynamicLinkedList.Node(4);
+        first.next = second;
+        second.next = second;
+        third.next = fourth;
+        boolean result = list.hasCycle(first);
+        assertThat(result, is(true));
     }
 }
