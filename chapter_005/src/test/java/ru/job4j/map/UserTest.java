@@ -25,5 +25,4 @@ public class UserTest {
         map.put(second, "second");
         System.out.println(map);
     }
-
 }
