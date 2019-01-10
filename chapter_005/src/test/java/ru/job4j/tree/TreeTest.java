@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * Class TreeTest is testing class Tree.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 2.
+ * @version 3.
  * @since 09.01.2019.
  */
 import static org.hamcrest.core.Is.is;
@@ -89,5 +89,32 @@ public class TreeTest {
         Iterator<Integer> itr = tree.iterator();
         Boolean result = itr.hasNext();
         assertThat(result, is(true));
+    }
+
+    @Test
+    public void whenWeCheckTreeIsBinaryAndGetTrue() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(2, 4);
+        tree.add(2, 5);
+        tree.add(3, 6);
+        tree.add(3, 7);
+        boolean result = tree.isBinary();
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void whenWeCheckTreeIsBinaryAndGetFalse() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(2, 5);
+        tree.add(3, 6);
+        tree.add(3, 7);
+        tree.add(3, 8);
+        boolean result = tree.isBinary();
+        assertThat(result, is(false));
     }
 }

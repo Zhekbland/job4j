@@ -6,7 +6,7 @@ import java.util.*;
  * Class Tree creates SimpleTree.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 2.
+ * @version 3.
  * @since 09.01.2019.
  */
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
@@ -39,6 +39,19 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             }
             for (Node<E> child : el.leaves()) {
                 data.offer(child);
+            }
+        }
+        return result;
+    }
+
+    public boolean isBinary() {
+        boolean result = true;
+        Iterator<E> itr = iterator();
+        while (itr.hasNext()) {
+            E resultItr = itr.next();
+            if (findBy(resultItr).get().leaves().size() > 2) {
+                result = false;
+                break;
             }
         }
         return result;
