@@ -46,10 +46,11 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
     public boolean isBinary() {
         boolean result = true;
-        Iterator<E> itr = iterator();
-        while (itr.hasNext()) {
-            E resultItr = itr.next();
-            if (findBy(resultItr).get().leaves().size() > 2) {
+        Queue<Node<E>> temp = new LinkedList<>(Collections.singleton(root));
+        while (!temp.isEmpty()) {
+            Node<E> elementTemp = temp.poll();
+            temp.addAll(elementTemp.leaves());
+            if (elementTemp.leaves().size() > 2) {
                 result = false;
                 break;
             }
