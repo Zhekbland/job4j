@@ -1,44 +1,41 @@
 package ru.job4j.statistics;
 
 import java.util.*;
+import java.util.function.BiFunction;
 
 /**
  * Class Analize is checking differences between previous and current.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 13.01.2019.
  */
 public class Analize {
 
     public Info diff(List<User> previous, List<User> current) {
         Info result = new Info(0, 0, 0);
-        ListIterator<User> itrPre = previous.listIterator();
-        ListIterator<User> itrCur = current.listIterator();
-        while (itrCur.hasNext()) {
-            User tempCur = itrCur.next();
-            while (itrPre.hasNext()) {
-                User tempPre = itrPre.next();
-                if (tempCur.equals(tempPre)) {
-                    itrCur.remove();
-                    itrPre.remove();
-                    while (itrPre.hasPrevious()) {
-                        itrPre.previous();
-                    }
-                    break;
-                } else if (tempCur.id == tempPre.id) {
-                    result.setChange(result.getChange() + 1);
-                    itrCur.remove();
-                    itrPre.remove();
-                    while (itrPre.hasPrevious()) {
-                        itrPre.previous();
-                    }
-                    break;
-                }
+        Map<Integer, String> prev = convert(previous);
+        Map<Integer, String> cur = convert(current);
+        Map<Integer, String> allMap = new HashMap<>(prev);
+        allMap.putAll(cur);
+        for (Map.Entry<Integer, String> map : allMap.entrySet()) {
+            if (!cur.containsKey(map.getKey())) {
+                result.setDeleted(result.getDeleted() + 1);
+            } else if (prev.containsKey(map.getKey())
+                    && !prev.get(map.getKey()).equals(map.getValue())) {
+                result.setChange(result.getChange() + 1);
+            } else if (!prev.containsKey(map.getKey())) {
+                result.setAdded(result.getAdded() + 1);
             }
         }
-        result.setAdded(current.size());
-        result.setDeleted(previous.size());
+        return result;
+    }
+
+    public Map<Integer, String> convert(List<User> previous) {
+        Map<Integer, String> result = new HashMap<>();
+        for (User user : previous) {
+            result.put(user.id, user.name);
+        }
         return result;
     }
 
@@ -53,6 +50,10 @@ public class Analize {
             this.deleted = deleted;
         }
 
+        public int getAdded() {
+            return added;
+        }
+
         public void setAdded(int added) {
             this.added = added;
         }
@@ -63,6 +64,10 @@ public class Analize {
 
         public void setChange(int change) {
             this.change = change;
+        }
+
+        public int getDeleted() {
+            return deleted;
         }
 
         public void setDeleted(int deleted) {
@@ -96,25 +101,6 @@ public class Analize {
         public User(int id, String name) {
             this.id = id;
             this.name = name;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            User user = (User) o;
-            return id == user.id
-                    && Objects.equals(name, user.name);
-        }
-
-        @Override
-        public int hashCode() {
-
-            return Objects.hash(id, name);
         }
     }
 }
