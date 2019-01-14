@@ -1,7 +1,6 @@
 package ru.job4j.statistics;
 
 import java.util.*;
-import java.util.function.BiFunction;
 
 /**
  * Class Analize is checking differences between previous and current.
@@ -14,20 +13,16 @@ public class Analize {
 
     public Info diff(List<User> previous, List<User> current) {
         Info result = new Info(0, 0, 0);
-        Map<Integer, String> prev = convert(previous);
-        Map<Integer, String> cur = convert(current);
-        Map<Integer, String> allMap = new HashMap<>(prev);
-        allMap.putAll(cur);
-        for (Map.Entry<Integer, String> map : allMap.entrySet()) {
-            if (!cur.containsKey(map.getKey())) {
-                result.setDeleted(result.getDeleted() + 1);
-            } else if (prev.containsKey(map.getKey())
-                    && !prev.get(map.getKey()).equals(map.getValue())) {
-                result.setChange(result.getChange() + 1);
-            } else if (!prev.containsKey(map.getKey())) {
+        Map<Integer, String> preMap = convert(previous);
+        for (User user : current) {
+            String name = preMap.remove(user.id);
+            if (name == null) {
                 result.setAdded(result.getAdded() + 1);
+            } else if (!name.equals(user.name)) {
+                result.setChange(result.getChange() + 1);
             }
         }
+        result.setDeleted(preMap.size());
         return result;
     }
 
@@ -64,10 +59,6 @@ public class Analize {
 
         public void setChange(int change) {
             this.change = change;
-        }
-
-        public int getDeleted() {
-            return deleted;
         }
 
         public void setDeleted(int deleted) {
