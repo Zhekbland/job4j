@@ -18,7 +18,7 @@ public class RectangleMove implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (this.rect.getX() == 300) {
                 while (this.rect.getX() != 0) {
                     this.rect.setX(rect.getX() - 1);
