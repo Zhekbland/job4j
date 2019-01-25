@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * Class SimpleBlockingQueueTest is testing class SimpleBlockingQueue.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 25.01.2019.
  */
 public class SimpleBlockingQueueTest {
@@ -47,5 +47,50 @@ public class SimpleBlockingQueueTest {
         consumer.join();
         assertThat(queue.poll(), is(1));
         assertThat(queue.poll(), is(2));
+    }
+
+    @Test
+    public void whenFetchAllThenGetIt() throws InterruptedException {
+        final CopyOnWriteArrayList<Integer> buffer = new CopyOnWriteArrayList<>();
+        final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
+        Thread producer = new Thread(
+                () -> {
+                    IntStream.range(0, 5).forEach(
+                            queue::offer
+                    );
+                }
+        );
+        producer.start();
+        Thread consumer = new Thread(
+                () -> {
+                    while (!queue.isEmpty() || !Thread.currentThread().isInterrupted()) {
+                        try {
+                            buffer.add(queue.poll());
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                }
+        );
+        consumer.start();
+        producer.join();
+        consumer.interrupt();
+        consumer.join();
+        assertThat(buffer, is(Arrays.asList(0, 1, 2, 3, 4)));
+    }
+
+    @Test
+    public void whenIsEmptyWeGetTrue() {
+        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
+        assertThat(queue.isEmpty(), is(true));
+    }
+
+    @Test
+    public void whenWeAddAndGet() throws InterruptedException {
+        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
+        queue.offer(1);
+        queue.offer(2);
+        queue.offer(3);
+        assertThat(queue.poll(), is(1));
     }
 }
