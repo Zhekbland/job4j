@@ -2,7 +2,6 @@
 language: java
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
-
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонни сервис https://codecov.io/
 after_success:
@@ -15,3 +14,8 @@ notifications:
       -eshpytev@mail.ru
     on_success: never # default: change
     on_failure: always # default: always
+
+jdk: openjdk11
+script:
+  - export JAVA_HOME=$HOME/openjdk11
+  - # do stuff with open OpenJDK 11
