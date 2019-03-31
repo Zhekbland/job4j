@@ -6,11 +6,11 @@ import java.util.concurrent.locks.ReentrantLock;
  * Class Board creates board of ReentrantLock.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
- * @since 19.02.2019.
+ * @version 3.
+ * @since 21.02.2019.
  */
-public class Board {
-    private final ReentrantLock[][] board = new ReentrantLock[5][5];
+public final class Board {
+    private final ReentrantLock[][] board = new ReentrantLock[2][2];
 
     public Board() {
         for (int i = 0; i < board.length; i++) {
@@ -30,11 +30,13 @@ public class Board {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
             if (board[dist.getRow()][dist.getColumn()].tryLock()) {
                 board[source.getRow()][source.getColumn()].unlock();
                 result = true;
+            } else {
+                move(source, new Cell(this.board.length));
             }
         }
         return result;
@@ -42,5 +44,9 @@ public class Board {
 
     public int getLength() {
         return this.board.length;
+    }
+
+    public ReentrantLock getReentrantLock(Cell source) {
+        return this.board[source.getRow()][source.getColumn()];
     }
 }
