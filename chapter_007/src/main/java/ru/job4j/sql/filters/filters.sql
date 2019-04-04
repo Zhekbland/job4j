@@ -38,27 +38,28 @@ insert into product(name, type_id, expired_date, price) values ('Icecream Fruit'
 insert into product(name, type_id, expired_date, price) values ('Gold of Russia', 3, '2019-07-06 08:00:00', 380);
 
 --1. Написать запрос получение всех продуктов с типом "СЫР"
-select name from product as p where type_id = (select id from type where name = 'cheese');
-select name from product as p where type_id = 1;
+select p.name from product as p join type as t on p.type_id = t.id where t.name = 'cheese';
 
 --2. Написать запрос получения всех продуктов, у кого в имени есть слово "мороженное"
-select name from product as p where p.name like '%Icecream%';
+select t.name as product_type, p.name from product as p join type as t on p.type_id = t.id where p.name ilike '%icecream%';
 
 --3. Написать запрос, который выводит все продукты, срок годности которых заканчивается в следующем месяце.
-select name, expired_date from product as p where p.expired_date between '2019-05-01 00:00:00' and '2019-06-01 00:00:00';
+select t.name as producr_type, p.name, p.expired_date from product as p join type as t on p.type_id = t.id where
+p.expired_date between '2019-05-01 00:00:00' and '2019-06-01 00:00:00';
 
 --4. Написать запрос, который выводит самый дорогой продукт.
-select name, price from product where price = (select max(price) from product);
+select t.name as product_name, p.name, p.price from product as p join type as t on p.type_id = t.id
+where price = (select max(price) from product);
 
 --5. Написать запрос, который выводит количество всех продуктов определенного типа.
-select count(p.id) from product as p where type_id = 3;
+select t.name, count(p.id) as amount from product as p join type as t on p.type_id = t.id where t.name = 'milk'
+group by t.name;
 
 --6. Написать запрос получение всех продуктов с типом "СЫР" и "МОЛОКО"
-select name, from product as p where p.type_id in ((select id from type where name = 'cheese'), (select id from type where name = 'milk'));
-select name, from product as p where p.type_id in (1, 2);
+select p.name, t.name from product as p join type as t on p.type_id = t.id where t.name in ('cheese', 'milk');
 
 --7. Написать запрос, который выводит тип продуктов, которых осталось меньше 10 штук.  
 select name from type where (select count(p.id) from product as p where p.type_id = type.id) < 4;
 
 --8. Вывести все продукты и их тип.
-select p.name, t.name from product as p inner join type as t on p.type_id = t.id;
+select p.name, t.name from product as p join type as t on p.type_id = t.id;
