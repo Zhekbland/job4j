@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class Array {
     /**
      *
-     * @param args
+     * @param args - arg.
      */
     public static void main(String[] args) {
         int[][] ar = new int[3][3];

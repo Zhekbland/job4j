@@ -17,7 +17,7 @@ public class Point {
 
     /**
      * Sum of first and second.
-     * @param Point .
+     * @param that -parameter for calculate.
      * @return distance to the point.
      */
     public double distanceTo(Point that) {

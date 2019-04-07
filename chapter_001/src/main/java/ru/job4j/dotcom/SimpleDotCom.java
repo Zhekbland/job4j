@@ -11,7 +11,7 @@ public class SimpleDotCom {
 
     /**
      * Create field for game and verify parameters.
-     * @param stringGuess
+     * @param stringGuess - guess.
      * @return result of game.
      */
     public String checkYourself(String stringGuess) {

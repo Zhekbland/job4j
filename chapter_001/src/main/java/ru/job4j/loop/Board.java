@@ -3,7 +3,7 @@ package ru.job4j.loop;
 /**
  * Class Board create a chess board.
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
- * @version &Id&
+ * @version 1
  * @since  0.1
  */
 public class Board {

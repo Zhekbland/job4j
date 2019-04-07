@@ -3,7 +3,7 @@ package ru.job4j.condition;
 /**
  * Class Triangle calculate parameters of the triangle.
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
- * @version &Id&
+ * @version 1
  * @since  0.1
  */
 public class Triangle {

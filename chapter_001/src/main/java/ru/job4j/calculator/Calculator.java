@@ -13,7 +13,6 @@ public class Calculator {
      * Sum of first and second.
      * @param first number.
      * @param second number.
-     * @return result of the sum of the first and second.
      */
     public void add(double first, double second) {
         this.result = first + second;
@@ -23,7 +22,6 @@ public class Calculator {
      * Subtraction of first and second.
      * @param first number.
      * @param second number.
-     * @return result of the subtraction of the first and second.
      */
     public void subtract(double first, double second) {
         this.result = first - second;
@@ -33,7 +31,6 @@ public class Calculator {
      * Division of first and second.
      * @param first number.
      * @param second number.
-     * @return result of the division of the first and second.
      */
     public void div(double first, double second) {
         this.result = first / second;
@@ -43,7 +40,6 @@ public class Calculator {
      * Multiplication of first and second.
      * @param first number.
      * @param second number.
-     * @return result of the multiplication of the first and second.
      */
     public void multiple(double first, double second) {
         this.result = first * second;

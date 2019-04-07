@@ -3,7 +3,7 @@ package ru.job4j.array;
 /**
  * Test.
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
- * @version $Id$
+ * @version 1
  * @since  0.1
  */
 
@@ -13,7 +13,7 @@ public class ArrayStr {
 
     /**
      * The array takes words and prints them.
-     * @param args
+     * @param args - arg.
      */
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);

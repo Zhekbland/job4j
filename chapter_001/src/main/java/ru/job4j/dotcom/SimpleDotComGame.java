@@ -10,7 +10,7 @@ public class SimpleDotComGame {
 
     /**
      * Create game DotComGame.
-     * @param args
+     * @param args - arg.
      */
     public static void main(String[] args) {
         int numOfGuesses = 0;

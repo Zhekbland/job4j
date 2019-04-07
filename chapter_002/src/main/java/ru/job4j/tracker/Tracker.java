@@ -18,7 +18,7 @@ public class Tracker {
     /**
      * Create data.
      * @param item data.
-     * @return
+     * @return item.
      */
     public Item add(Item item) {
         item.setId(this.generateId());
@@ -30,6 +30,7 @@ public class Tracker {
      * Replace created data.
      * @param id of data
      * @param item data.
+     * @return true or false.
      */
     public boolean replace(String id, Item item) {
         boolean result = false;
@@ -47,6 +48,7 @@ public class Tracker {
     /**
      * Delete data from database.
      * @param id data
+     * @return true or false.
      */
     public boolean delete(String id) {
         boolean result = false;

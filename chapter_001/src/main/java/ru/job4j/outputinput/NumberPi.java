@@ -10,7 +10,7 @@ public class NumberPi {
 
     /**
      * Number PI
-     * @param args
+     * @param args - arg.
      */
     public static void main(String[] args) {
         double p = Math.PI;
