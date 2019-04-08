@@ -3,29 +3,20 @@ package ru.job4j.condition;
 /**
  * Class Triangle calculate parameters of the triangle.
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru)
- * @version 1
- * @since  0.1
+ * @version 2
+ * @since 08.04.2019
  */
 public class Triangle {
-    private Point a;
-    private Point b;
-    private Point c;
-
-    public  Triangle(Point a, Point b, Point c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-    }
 
     /**
      * Calculating the semi-perimeter along the lengths of the sides.
-     * @param ab is distance between points a b.
-     * @param ac is distance between points a c.
-     * @param bc is distance between points b c.
+     * @param a is distance between points a b.
+     * @param b is distance between points a c.
+     * @param c is distance between points b c.
      * @return Perimeter.
      */
-    public double period(double ab, double ac, double bc) {
-        return (ab + ac + bc) / 2;
+    public double period(double a, double b, double c) {
+        return (a + b + c) / 2;
     }
 
     /**
@@ -33,14 +24,14 @@ public class Triangle {
      *
      * @return area of triangle if exist else -1
      */
-    public double area() {
+    public double area(int x1, int y1, int x2, int y2, int x3, int y3) {
         double rsl = -1;
-        double ab = this.a.distanceTo(this.b);
-        double ac = this.a.distanceTo(this.c);
-        double bc = this.b.distanceTo(this.c);
-        double p = this.period(ab, ac, bc);
-        if (this.exist(ab, ac, bc)) {
-            rsl = Math.sqrt(p * (p - ab) * (p - ac) * (p - bc));
+        double a = new Point().distance(x1, y1, x2, y2);
+        double b = new Point().distance(x2, y2, x3, y3);
+        double c = new Point().distance(x1, y1, x3, y3);
+        double p = period(a, b, c);
+        if (this.exist(a, b, c)) {
+            rsl = Math.sqrt(p * (p - a) * (p - b) * (p - c));
         }
         return rsl;
     }
@@ -50,7 +41,7 @@ public class Triangle {
      * @param ab length from point a b.
      * @param ac length from point a c.
      * @param bc length from point b c.
-     * @return
+     * @return exist or not exist triangle.
      */
     private boolean exist(double ab, double ac, double bc) {
         return ((ab + ac) > bc) && ((ab + bc) > ac) && ((ac + bc) > ab);
