@@ -44,8 +44,8 @@ select p.name from product as p join type as t on p.type_id = t.id where t.name 
 select t.name as product_type, p.name from product as p join type as t on p.type_id = t.id where p.name ilike '%icecream%';
 
 --3. Написать запрос, который выводит все продукты, срок годности которых заканчивается в следующем месяце.
-select t.name as producr_type, p.name, p.expired_date from product as p join type as t on p.type_id = t.id where
-p.expired_date between '2019-05-01 00:00:00' and '2019-06-01 00:00:00';
+select t.name, p.name, p.expired_date from product as p join type as t on p.type_id = t.id
+where expired_date between CURRENT_DATE and CURRENT_DATE + INTERVAL '1 month';
 
 --4. Написать запрос, который выводит самый дорогой продукт.
 select t.name as product_name, p.name, p.price from product as p join type as t on p.type_id = t.id
