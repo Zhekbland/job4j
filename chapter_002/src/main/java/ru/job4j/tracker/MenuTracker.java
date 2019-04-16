@@ -16,11 +16,11 @@ import java.util.function.Consumer;
 public class MenuTracker {
 
     private Input input;
-    private Tracker tracker;
+    private ITracker tracker;
     private List<UserAction> actions = new ArrayList<>();
     private List<Integer> range = new ArrayList<>();
 
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, ITracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -75,7 +75,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             System.out.println("----------Add new item-----------");
             String name = input.ask("Enter item'event name : ");
             String desc = input.ask("Enter item'event description");
@@ -91,7 +91,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             System.out.println("------------ Show all items --------------");
             Item[] items = tracker.getAll();
             if (items.length > 0) {
@@ -110,7 +110,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             System.out.println("----------Add item'event id for edit-----------");
             String id = input.ask("Enter item'event id : ");
             String name1 = input.ask("Enter item'event name : ");
@@ -130,7 +130,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             String id = input.ask("Enter item'event id for delete : ");
             if (tracker.delete(id)) {
                 System.out.println("Item was delete.");
@@ -146,7 +146,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             String id = input.ask("Enter item'event id which you find : ");
             Item item = tracker.findById(id);
             if (item != null) {
@@ -164,7 +164,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             String name = input.ask("Enter item'event name which you find : ");
             Item[] items = tracker.findByName(name);
             if (items.length > 0) {
@@ -184,7 +184,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
         }
     }
 }

@@ -10,7 +10,7 @@ import java.util.*;
  * @version $Id$
  * @since  0.1
  */
-public class Tracker {
+public class Tracker implements ITracker {
     private Item[] items = new Item[100];
     private  int position = 0;
     private static final Random RN = new Random();
@@ -70,7 +70,7 @@ public class Tracker {
      * @param id dara
      * @return found data.
      */
-    protected Item findById(String id) {
+    public Item findById(String id) {
         Item result = null;
         for (Item item : items) {
             if (item != null && item.getId().equals(id)) {

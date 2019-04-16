@@ -1,5 +1,7 @@
 package ru.job4j.models;
 
+import java.util.Objects;
+
 /**
  *
  */
@@ -54,5 +56,25 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Item item = (Item) o;
+        return create == item.create
+                && Objects.equals(name, item.name)
+                && Objects.equals(description, item.description)
+                && Objects.equals(id, item.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, create, id);
     }
 }

@@ -13,9 +13,9 @@ import java.util.List;
 public class StartUI {
 
     private final Input input;
-    private final ru.job4j.tracker.Tracker tracker;
+    private final ITracker tracker;
 
-    public StartUI(Input input, ru.job4j.tracker.Tracker tracker) {
+    public StartUI(Input input, ITracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
