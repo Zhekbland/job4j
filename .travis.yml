@@ -18,7 +18,7 @@ matrix:
 notifications:
   email:
     recipients:
-      -eshpytev@mail.ru
+      - eshpytev@mail.ru
     on_success: never # default: change
     on_failure: always # default: always
 
@@ -26,3 +26,7 @@ notifications:
 #script:
 #  - export JAVA_HOME=$HOME/openjdk11
 #  - # do stuff with open OpenJDK 11
+
+#MySQL
+services:
+  - mysql
