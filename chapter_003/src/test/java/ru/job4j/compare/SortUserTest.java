@@ -8,7 +8,7 @@ import java.util.*;
  * Class SortUserTest to do test.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 24.10.2018.
  */
 import static org.hamcrest.core.Is.is;
@@ -51,9 +51,53 @@ public class SortUserTest {
     }
 
     @Test
+    public void whenListSortNameLengthAdvanced() {
+        SortUser users = new SortUser();
+        List<User> result = users.sortNameLengthAdvanced(Arrays.asList(
+                new User("Peter", 32),
+                new User("Evgenii", 26),
+                new User("Inna", 29),
+                new User("Vladislav", 28)
+        ));
+        List<User> expect = Arrays.asList(
+                new User("Inna", 29),
+                new User("Peter", 32),
+                new User("Evgenii", 26),
+                new User("Vladislav", 28)
+        );
+        assertThat(result, is(expect));
+    }
+
+    @Test
     public void whenListSortByAllFields() {
         SortUser users = new SortUser();
         List<User> result = users.sortByAllFields(Arrays.asList(
+                new User("Petr", 32),
+                new User("Petr", 23),
+                new User("Vladislav", 26),
+                new User("Inna", 50),
+                new User("Inna", 29),
+                new User("Vladislav", 28),
+                new User("Evgenii", 26),
+                new User("Evgenii", 23)
+        ));
+        List<User> expect = Arrays.asList(
+                new User("Evgenii", 23),
+                new User("Evgenii", 26),
+                new User("Inna", 29),
+                new User("Inna", 50),
+                new User("Petr", 23),
+                new User("Petr", 32),
+                new User("Vladislav", 26),
+                new User("Vladislav", 28)
+        );
+        assertThat(result, is(expect));
+    }
+
+    @Test
+    public void whenListSortByAllFieldsAdvanced() {
+        SortUser users = new SortUser();
+        List<User> result = users.sortByAllFieldsAdvanced(Arrays.asList(
                 new User("Petr", 32),
                 new User("Petr", 23),
                 new User("Vladislav", 26),
