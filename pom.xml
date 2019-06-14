@@ -10,7 +10,7 @@
     <properties>
         <maven.compiler.source>10</maven.compiler.source>
         <maven.compiler.target>10</maven.compiler.target>
-       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <modules>
@@ -23,15 +23,15 @@
         <module>chapter_007</module>
         <module>chapter_008</module>
     </modules>
-	 
-	<build>
+
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <additionalOptions>-html5</additionalOptions>
+                    <additionalOptions>html5</additionalOptions>
                 </configuration>
             </plugin>
             <plugin>
@@ -58,7 +58,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.3</version>
+                <version>0.8.4</version>
                 <executions>
                     <execution>
                         <goals>
@@ -76,8 +76,8 @@
             </plugin>
         </plugins>
     </build>
-	
-	<dependencies>
+
+    <dependencies>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
@@ -123,6 +123,4 @@
             <version>11</version>
         </dependency>
     </dependencies>
-	
-	
 </project>
