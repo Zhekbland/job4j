@@ -6,14 +6,7 @@ sudo: false
 # Здесь используется сторонни сервис https://codecov.io/
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-before_install:
-  - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
 
-matrix:
-  include:
-    # Java 10 "OpenJDK"
-    - env: JDK='OpenJDK 10'
-      install: . ./install-jdk.sh -F 10 -L GPL
 # Отправлять уведомление на почтуyouremail@smtp.ru(Изменить на свою) если сборка упала
 notifications:
   email:
@@ -33,8 +26,3 @@ test:
   database: travis_ci_test
 addons:
   postgresql: "9.5"
-
-#jdk: openjdk11
-#script:
-#  - export JAVA_HOME=$HOME/openjdk11
-#  - # do stuff with open OpenJDK 11
