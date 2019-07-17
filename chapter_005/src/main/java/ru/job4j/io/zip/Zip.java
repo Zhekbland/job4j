@@ -1,5 +1,8 @@
 package ru.job4j.io.zip;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -9,10 +12,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * Class Zip creates zip archive without ext elements.
+ * Class Zip creates zip archive without ext elements with Log.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 16.07.2019.
  */
 public class Zip {
@@ -21,6 +24,11 @@ public class Zip {
      * List for save elements without ext elements.
      */
     private List<File> fileList = new ArrayList<>();
+
+    /**
+     * Logger create ziplog.txt for zip.
+     */
+    private static final Logger LOGGER = LogManager.getLogger(Zip.class.getName());
 
     public List<File> seekBy(String root, String ext) {
         Path path = Paths.get(root);
@@ -42,11 +50,11 @@ public class Zip {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             for (File source : sourceList) {
                 if (source.isDirectory()) {
-                    System.out.println("Directory added: " + source);
+                    LOGGER.info("Directory added: " + source);
                     continue;
                 }
                 try (FileInputStream fis = new FileInputStream(source)) {
-                    System.out.println("File added: " + source);
+                    LOGGER.info("File added: " + source);
                     zip.putNextEntry(new ZipEntry(source.getPath()));
                     byte[] buffer = new byte[fis.available()];
                     int length;

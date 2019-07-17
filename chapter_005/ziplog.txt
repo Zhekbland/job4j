@@ -1,0 +1,6 @@
+2019-07-17 16:41:26.528 [main] INFO  ru.job4j.io.zip.Zip - Directory added: temp
+2019-07-17 16:41:26.536 [main] INFO  ru.job4j.io.zip.Zip - Directory added: temp\a
+2019-07-17 16:41:26.537 [main] INFO  ru.job4j.io.zip.Zip - File added: temp\a\23.txt
+2019-07-17 16:41:26.542 [main] INFO  ru.job4j.io.zip.Zip - Directory added: temp\a\b
+2019-07-17 16:41:26.543 [main] INFO  ru.job4j.io.zip.Zip - File added: temp\a\b\21.txt
+2019-07-17 16:41:26.544 [main] INFO  ru.job4j.io.zip.Zip - Directory added: temp\a\b\c
