@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
  * Class BankTransferTest tests BankTransfer.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 05.11.2018.
  */
 public class BankTransferTest {
@@ -52,15 +52,17 @@ public class BankTransferTest {
         bank.addAccountToUser("2222 Europe", new Account(30, "#002"));
         bank.addAccountToUser("2323 Russia", new Account(60_000_000, "#111"));
         bank.addAccountToUser("2323 Russia", new Account(30_000_000, "#777"));
-        bank.transferMoney("2323 Russia", "#111", "2222 Europe",
+        boolean result2 = bank.transferMoney("2323 Russia", "#111", "2222 Europe",
                 "#001", 800_000);
-        bank.transferMoney("2323 Russia", "#777", "2222 Europe",
+        boolean result3 = bank.transferMoney("2323 Russia", "#777", "2222 Europe",
                 "#002", 100_000);
         List<Account> result = bank.getUserAccounts("2222 Europe");
         List<Account> expect = new ArrayList<>();
         expect.add(new Account(800_050, "#001"));
         expect.add(new Account(100_030, "#002"));
         assertThat(result, is(expect));
+        assertThat(result2, is(true));
+        assertThat(result3, is(true));
     }
 
     @Test
@@ -70,9 +72,7 @@ public class BankTransferTest {
         bank.addAccountToUser("2222 Europe", new Account(30000, "#001"));
         bank.addAccountToUser("2222 Europe", new Account(90000, "#002"));
         bank.addAccountToUser("2222 Europe", new Account(500, "#003"));
-        bank.deleteUser(new User("Alex", "2222 Europe"));
-        List<Account> result = bank.getUserAccounts("2222 Europe");
-        List<Account> expect = new ArrayList<>();
-        assertThat(result, is(expect));
+        boolean result = bank.deleteUser(new User("Alex", "2222 Europe"));
+        assertThat(result, is(true));
     }
 }

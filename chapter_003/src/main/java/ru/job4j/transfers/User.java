@@ -6,12 +6,12 @@ import java.util.Objects;
  * Class User create user's name, passport.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 05.11.2018.
  */
 public class User {
-    private String name;
-    private String passport;
+    private final String name;
+    private final String passport;
 
     public User(String name, String passport) {
         this.name = name;

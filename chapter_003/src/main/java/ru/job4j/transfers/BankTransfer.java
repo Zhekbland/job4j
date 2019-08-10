@@ -1,15 +1,12 @@
 package ru.job4j.transfers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Class BankTransfer does a lot of operations.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 05.11.2018.
  */
 public class BankTransfer {
@@ -20,53 +17,28 @@ public class BankTransfer {
         this.bankData.put(user, new ArrayList<>());
     }
 
-    public void deleteUser(User user) {
-        for (Map.Entry<User, List<Account>> bank : this.bankData.entrySet()) {
-            if (bank.getKey().equals(user)) {
-                this.bankData.remove(bank.getKey());
-                break;
-            }
-        }
+    public boolean deleteUser(User user) {
+        return this.bankData.remove(user) != null;
     }
 
     public void addAccountToUser(String passport, Account account) {
-        for (Map.Entry<User, List<Account>> bank : this.bankData.entrySet()) {
-            if (bank.getKey().getPassport().equals(passport)) {
-                bank.getValue().add(account);
-                break;
-            }
-        }
+        this.bankData.get(this.bankData.keySet().stream()
+                .filter(x -> x.getPassport().equals(passport)).findFirst().orElseThrow()).add(account);
     }
 
     public void deleteAccountFromUser(String passport, Account account) {
-        for (Map.Entry<User, List<Account>> bank : this.bankData.entrySet()) {
-            if (bank.getKey().getPassport().equals(passport)) {
-                bank.getValue().remove(account);
-                break;
-            }
-        }
+        this.bankData.get(this.bankData.keySet().stream()
+                .filter(x -> x.getPassport().equals(passport)).findFirst().orElseThrow()).remove(account);
     }
 
     public List<Account> getUserAccounts(String passport) {
-        List<Account> accounts = new ArrayList<>();
-        for (Map.Entry<User, List<Account>> bank : this.bankData.entrySet()) {
-            if (bank.getKey().getPassport().equals(passport)) {
-                accounts.addAll(bank.getValue());
-                break;
-            }
-        }
-        return accounts;
+        return this.bankData.get(this.bankData.keySet().stream()
+                .filter(x -> x.getPassport().equals(passport)).findFirst().orElseThrow());
     }
 
     public Account findAccountByRequisites(String passport, String requisite) {
-        Account account = null;
-        for (Account findAccount : getUserAccounts(passport)) {
-            if (findAccount.getRequisites().equals(requisite)) {
-                account = findAccount;
-                break;
-            }
-        }
-        return account;
+        return getUserAccounts(passport).stream()
+                .filter(x -> x.getRequisites().equals(requisite)).findFirst().orElseThrow();
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport,
