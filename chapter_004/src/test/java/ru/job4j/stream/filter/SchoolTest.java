@@ -4,7 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -73,4 +75,19 @@ public class SchoolTest {
         assertThat(result, is(expected));
     }
 
+    @Test
+    public void whenWeTurnListOfStudentIntoMap() {
+        Student student1 = new Student("Bob", 45);
+        Student student2 = new Student("Sam", 90);
+        Student student3 = new Student("John", 30);
+        Student student4 = new Student("Silvia", 40);
+        List<Student> studentList = Arrays.asList(student1, student2, student3, student4);
+        Map<String, Student> expected = new HashMap<>();
+        expected.put("Bob", student1);
+        expected.put("Sam", student2);
+        expected.put("John", student3);
+        expected.put("Silvia", student4);
+        Map<String, Student> result = School.toMap(studentList);
+        assertThat(result, is(expected));
+    }
 }

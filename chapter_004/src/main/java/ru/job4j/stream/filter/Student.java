@@ -11,6 +11,7 @@ import java.util.Objects;
  */
 public class Student {
 
+    private String name;
     private final int score;
 
     /**
@@ -26,8 +27,17 @@ public class Student {
         }
     }
 
+    public Student(String name, int score) {
+        this(score);
+        this.name = name;
+    }
+
     public int getScore() {
         return score;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -39,11 +49,12 @@ public class Student {
             return false;
         }
         Student student = (Student) o;
-        return score == student.score;
+        return score == student.score
+                && Objects.equals(name, student.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score);
+        return Objects.hash(name, score);
     }
 }
