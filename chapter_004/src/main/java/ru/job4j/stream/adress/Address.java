@@ -6,7 +6,7 @@ import java.util.Objects;
  * Class Address is creating address of profile.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 09.08.2019.
  */
 public class Address {
@@ -21,6 +21,10 @@ public class Address {
         this.street = street;
         this.home = home;
         this.apartment = apartment;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     @Override
