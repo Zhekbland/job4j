@@ -1,9 +1,11 @@
 package ru.job4j.stream.filter;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Class School is creating filter for class of students.
@@ -34,6 +36,6 @@ public class School {
     public static Map<String, Student> toMap(List<Student> studentList) {
         return studentList.stream()
                 .collect(Collectors
-                        .toMap(Student::getName, s -> s));
+                        .toMap(Student::getName, s -> s, (existing, replacement) -> existing));
     }
 }

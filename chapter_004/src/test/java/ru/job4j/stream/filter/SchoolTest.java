@@ -80,13 +80,15 @@ public class SchoolTest {
         Student student1 = new Student("Bob", 45);
         Student student2 = new Student("Sam", 90);
         Student student3 = new Student("John", 30);
-        Student student4 = new Student("Silvia", 40);
-        List<Student> studentList = Arrays.asList(student1, student2, student3, student4);
+        Student student4 = new Student("John", 30);
+        Student student5 = new Student("Silvia", 40);
+
+        List<Student> studentList = Arrays.asList(student1, student2, student3, student4, student5);
         Map<String, Student> expected = new HashMap<>();
         expected.put("Bob", student1);
         expected.put("Sam", student2);
         expected.put("John", student3);
-        expected.put("Silvia", student4);
+        expected.put("Silvia", student5);
         Map<String, Student> result = School.toMap(studentList);
         assertThat(result, is(expected));
     }
