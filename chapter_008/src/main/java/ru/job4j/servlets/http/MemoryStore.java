@@ -7,7 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Class MemoryStore creates List of users.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 21.08.2019.
  */
 public class MemoryStore implements Store {
@@ -27,11 +27,8 @@ public class MemoryStore implements Store {
 
     @Override
     public void update(User user) {
-        User result = findById(user.getId());
-        if (result != null) {
-            this.userList.remove(result);
-            this.userList.add(user);
-        }
+        this.userList.remove(findById(user.getId()));
+        this.userList.add(user);
     }
 
     @Override
@@ -46,13 +43,6 @@ public class MemoryStore implements Store {
 
     @Override
     public User findById(String id) {
-        User result = null;
-        for (User user : this.userList) {
-            if (user.getId().equals(id)) {
-                result = user;
-                break;
-            }
-        }
-        return result;
+        return this.userList.stream().filter(x -> x.getId().equals(id)).findAny().orElse(null);
     }
 }

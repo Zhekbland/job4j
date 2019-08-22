@@ -10,21 +10,22 @@ import java.io.PrintWriter;
  * Class UserServlet creates servlet for List of users fillings.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 21.08.2019.
  */
 public class UserServlet extends HttpServlet {
 
     private final ValidateService logic = ValidateService.getInstance();
 
+    private static final String ADD = "add";
+    private static final String DELETE = "delete";
+    private static final String UPDATE = "update";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        for (User user : this.logic.findAll()) {
-            writer.println(user.toString());
-            writer.flush();
-        }
+        PrintWriter writer = resp.getWriter();
+        this.logic.findAll().forEach(x -> writer.println(x.toString()));
     }
 
     @Override
@@ -36,11 +37,11 @@ public class UserServlet extends HttpServlet {
         String login = req.getParameter("login");
         String email = req.getParameter("email");
 
-        if (action.equals("add")) {
+        if (ADD.equals(action)) {
             logic.add(new User(id, name, login, email));
-        } else if (req.getParameter("action").equals("delete")) {
+        } else if (DELETE.equals(action)) {
             logic.delete(new User(id, name, login, email));
-        } else if (req.getParameter("action").equals("update")) {
+        } else if (UPDATE.equals(action)) {
             logic.update(new User(id, name, login, email));
         }
         doGet(req, resp);
