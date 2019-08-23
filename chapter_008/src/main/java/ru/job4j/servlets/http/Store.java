@@ -6,12 +6,12 @@ import java.util.List;
  * Interface Store.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 3.
  * @since 21.08.2019.
  */
 public interface Store {
 
-    void add(User user);
+    User add(User user);
 
     void update(User user);
 
@@ -19,5 +19,5 @@ public interface Store {
 
     List<User> findAll();
 
-    User findById(String id);
+    User findById(User user);
 }

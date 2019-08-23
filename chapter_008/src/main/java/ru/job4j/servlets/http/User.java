@@ -6,24 +6,32 @@ import java.util.Objects;
  * Class User creates instances of users.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 3.
  * @since 21.08.2019.
  */
 public class User {
 
-    private final String id;
-    private final String name;
-    private final String login;
-    private final String email;
+    private long id;
+    private String name;
+    private String login;
+    private String email;
 
-    public User(String id, String name, String login, String email) {
-        this.id = id;
+    public User(String name, String login, String email) {
         this.name = name;
         this.login = login;
         this.email = email;
     }
 
-    public String getId() {
+    public User(long id, String name, String login, String email) {
+        this(name, login, email);
+        this.id = id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
         return id;
     }
 
