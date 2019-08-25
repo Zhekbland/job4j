@@ -40,7 +40,7 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
-        this.logic.findAll().forEach(x -> writer.println(x.toString()));
+        this.logic.findAll().forEach(user -> writer.println(user.toString()));
     }
 
     @Override
@@ -53,10 +53,9 @@ public class UserServlet extends HttpServlet {
         String email = getStringParameters(req, "email");
 
         String apply = this.functions.getOrDefault(action, user -> "action not found")
-                .apply(new User(Long.parseLong(id), name, login, email));
+                .apply(new User(Integer.parseInt(id), name, login, email));
         PrintWriter writer = resp.getWriter();
         writer.println(apply);
-
     }
 
     private String getStringParameters(HttpServletRequest req, String name) {

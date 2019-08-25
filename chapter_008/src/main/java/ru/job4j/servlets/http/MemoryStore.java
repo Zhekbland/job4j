@@ -1,20 +1,31 @@
 package ru.job4j.servlets.http;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Class MemoryStore creates List of users.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 3.
+ * @version 4.
  * @since 21.08.2019.
  */
 public class MemoryStore implements Store {
 
-    private final List<User> userList = new CopyOnWriteArrayList<>();
+    /**
+     * Concurrent HashMap for concurrency.
+     */
+    private final Map<Integer, User> userMap = new ConcurrentHashMap<>();
 
     private static final MemoryStore INSTANCE = new MemoryStore();
+
+    /**
+     * Atomic variable for support concurrency.
+     */
+    private volatile AtomicInteger id = new AtomicInteger();
 
     public static MemoryStore getInstance() {
         return INSTANCE;
@@ -22,35 +33,33 @@ public class MemoryStore implements Store {
 
     @Override
     public User add(User user) {
-        user.setId(generateId(user));
-        this.userList.add(user);
-        return user;
-    }
-
-    private long generateId(User user) {
-        return Math.abs(user.hashCode());
+        User result = null;
+        if (!this.userMap.containsValue(user)) {
+            int userId = id.incrementAndGet();
+            user.setId(userId);
+            this.userMap.put(user.getId(), user);
+            result = user;
+        }
+        return result;
     }
 
     @Override
     public void update(User user) {
-        this.userList.remove(findById(user));
-        this.userList.add(user);
+        this.userMap.replace(user.getId(), user);
     }
 
     @Override
     public void delete(User user) {
-        this.userList.remove(findById(user));
+        this.userMap.remove(user.getId());
     }
 
     @Override
     public List<User> findAll() {
-        return this.userList;
+        return new ArrayList<>(this.userMap.values());
     }
 
     @Override
     public User findById(User user) {
-        return this.userList.stream()
-                .filter(x -> (x.getId() == generateId(user)) || x.getId() == user.getId())
-                .findAny().orElse(null);
+        return this.userMap.get(user.getId());
     }
 }

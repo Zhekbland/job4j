@@ -6,7 +6,7 @@ import java.util.List;
  * Class ValidateService validates duplicate id in List of users.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 3.
+ * @version 4.
  * @since 21.08.2019.
  */
 public class ValidateService {
@@ -20,9 +20,8 @@ public class ValidateService {
     }
 
     public User add(User user) {
-        return (findById(user) == null) ? logic.add(user) : null;
+        return logic.add(user);
     }
-
 
     public boolean update(User user) {
         boolean result = findById(user) != null;

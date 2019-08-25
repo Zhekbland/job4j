@@ -6,12 +6,12 @@ import java.util.Objects;
  * Class User creates instances of users.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 3.
+ * @version 4.
  * @since 21.08.2019.
  */
 public class User {
 
-    private long id;
+    private int id;
     private String name;
     private String login;
     private String email;
@@ -22,19 +22,18 @@ public class User {
         this.email = email;
     }
 
-    public User(long id, String name, String login, String email) {
+    public User(int id, String name, String login, String email) {
         this(name, login, email);
         this.id = id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId() {
+    public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -45,21 +44,22 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(id, user.id)
-                && Objects.equals(name, user.name)
+        return Objects.equals(name, user.name)
                 && Objects.equals(login, user.login)
                 && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, login, email);
+        return Objects.hash(name, login, email);
     }
 
     @Override
     public String toString() {
-        return "User{" + "id='" + id + '\'' + ", name='" + name + '\''
-                + ", login='" + login + '\'' + ", email='" + email + '\''
-                + '}' + "\n";
+        return "User{"
+                + "id=" + id + ", name='" + name + '\''
+                + ", login='" + login + '\''
+                + ", email='" + email + '\''
+                + '}';
     }
 }
