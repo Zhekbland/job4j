@@ -24,7 +24,7 @@ public class ValidateService {
     }
 
     public boolean update(User user) {
-        boolean result = findById(user) != null;
+        boolean result = findById(user.getId()) != null;
         if (result) {
             logic.update(user);
         }
@@ -32,7 +32,7 @@ public class ValidateService {
     }
 
     public boolean delete(User user) {
-        boolean result = findById(user) != null;
+        boolean result = findById(user.getId()) != null;
         if (result) {
             logic.delete(user);
         }
@@ -44,7 +44,7 @@ public class ValidateService {
     }
 
 
-    public User findById(User user) {
-        return logic.findById(user);
+    public User findById(int id) {
+        return logic.findById(id);
     }
 }

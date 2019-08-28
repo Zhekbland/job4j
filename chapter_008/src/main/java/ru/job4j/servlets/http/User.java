@@ -16,15 +16,23 @@ public class User {
     private String login;
     private String email;
 
-    public User(String name, String login, String email) {
+    public User(int id, String name, String login, String email) {
+        this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
     }
 
-    public User(int id, String name, String login, String email) {
-        this(name, login, email);
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public int getId() {
@@ -56,10 +64,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{"
-                + "id=" + id + ", name='" + name + '\''
-                + ", login='" + login + '\''
-                + ", email='" + email + '\''
-                + '}';
+        return "User: name = " + this.name + ", login = "
+                + this.login + ", email = " + this.email + "    ";
     }
 }

@@ -59,7 +59,7 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public User findById(User user) {
-        return this.userMap.get(user.getId());
+    public User findById(int id) {
+        return this.userMap.get(id);
     }
 }
