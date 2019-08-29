@@ -5,32 +5,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
 
 /**
  * UsersServlet show all users in table
  * and create button for create, delete, update.
+ *
+ * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
+ * @version 2.
+ * @since 28.08.2019.
  */
 public class UsersServlet extends HttpServlet {
 
-    private final ValidateService logic = ValidateService.getInstance();
+    private final ValidateService validateService = ValidateService.getInstance();
 
-    private static final String ADD = "add";
-    private static final String DELETE = "delete";
-    private static final String UPDATE = "update";
-
-    /**
-     * Map of IF-ELSE logic.
-     */
-    private final Map<String, Function<User, String>> functions = new HashMap<>();
+    private final DispatchFunction dispatchFunction = DispatchFunction.getInstance();
 
     @Override
     public void init() {
-        initDispatch();
-        this.logic.add(new User(0, "name1", "login1", "email1"));
-        this.logic.add(new User(0, "name2", "login2", "email2"));
+        this.validateService.add(new User(0, "name1", "login1", "email1"));
+        this.validateService.add(new User(0, "name2", "login2", "email2"));
     }
 
     @Override
@@ -39,7 +32,7 @@ public class UsersServlet extends HttpServlet {
         resp.setContentType("text/html");
 
         StringBuilder sb = new StringBuilder("<table border='1' cellpadding='5'>");
-        for (User user : this.logic.findAll()) {
+        for (User user : this.validateService.findAll()) {
             sb.append("<tr>");
             sb.append("<td valign='middle'  align='center'>");
             sb.append(user.toString());
@@ -91,8 +84,9 @@ public class UsersServlet extends HttpServlet {
         String login = getStringParameters(req, "login");
         String email = getStringParameters(req, "email");
 
-        String apply = this.functions.getOrDefault(action, user -> "action not found")
-                .apply(new User(Integer.parseInt(id), name, login, email));
+        String apply = dispatchFunction.actionChecker(action,
+                new User(Integer.parseInt(id), name, login, email));
+
         PrintWriter writer = resp.getWriter();
         writer.println(apply);
         doGet(req, resp);
@@ -103,33 +97,4 @@ public class UsersServlet extends HttpServlet {
         String result = req.getParameter(name);
         return result != null ? result : "0";
     }
-
-    /**
-     * Fill map of logic.
-     */
-    private void initDispatch() {
-        functions.put(ADD, this.add);
-        functions.put(UPDATE, this.update);
-        functions.put(DELETE, this.delete);
-    }
-
-    /**
-     * ADD
-     */
-    private Function<User, String> add = (user -> {
-        User result = logic.add(user);
-        return result != null ? "User " + user.getName() + " was create" : "Such User already exists";
-    });
-
-    /**
-     * UPDATE
-     */
-    private Function<User, String> update = (user ->
-            logic.update(user) ? "User was update" : "User wasn't update");
-
-    /**
-     * DELETE
-     */
-    private Function<User, String> delete = (user ->
-            logic.delete(user) ? "User was delete" : "User wasn't delete");
 }
