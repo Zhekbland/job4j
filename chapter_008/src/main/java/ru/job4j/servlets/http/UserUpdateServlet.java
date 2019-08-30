@@ -10,7 +10,7 @@ import java.io.PrintWriter;
  * UserUpdateServlet show form for update user's information.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 2.
+ * @version 3.
  * @since 28.08.2019.
  */
 public class UserUpdateServlet extends HttpServlet {
@@ -20,40 +20,7 @@ public class UserUpdateServlet extends HttpServlet {
     private final DispatchFunction dispatchFunction = DispatchFunction.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        PrintWriter writer = resp.getWriter();
-        resp.setContentType("text/html");
-        String id = req.getParameter("id");
-        User user = this.validateService.findById(Integer.parseInt(id));
-
-        StringBuilder sb = new StringBuilder("<table border='1' cellpadding='5'>");
-        sb.append("<tr>");
-        sb.append("<td valign='middle'  align='center'>");
-        sb.append("<form action='" + req.getContextPath() + "/list' method='post'>");
-        sb.append("<input type='hidden' name='action' value='update'/>");
-        sb.append("<input type='hidden' name='id' value='" + id + "'/>");
-        sb.append(" Name: <input type='text' name='name' value='" + user.getName() + "'/>");
-        sb.append(" Login: <input type='text' name='login' value='" + user.getLogin() + "'/>");
-        sb.append(" Email: <input type='text' name='email' value='" + user.getEmail() + "'/>");
-        sb.append("&nbsp;");
-        sb.append("<input type='submit' value='Save'>");
-        sb.append("</td>");
-        sb.append("</tr>");
-        sb.append("</form>");
-        sb.append("</table>");
-
-        writer.append("<!DOCTYPE html>"
-                + "<html lang=\"en\">"
-                + "<head>\n"
-                + "    <meta charset=\"UTF-8\">"
-                + "    <title>Title</title>"
-                + "</head>"
-                + "<body>"
-                + sb.toString()
-                + "</body>"
-                + "</html>");
-        writer.flush();
-        writer.close();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
     }
 
     @Override
@@ -69,7 +36,6 @@ public class UserUpdateServlet extends HttpServlet {
                 new User(Integer.parseInt(id), name, login, email));
         PrintWriter writer = resp.getWriter();
         writer.println(apply);
-        doGet(req, resp);
         writer.close();
     }
 
