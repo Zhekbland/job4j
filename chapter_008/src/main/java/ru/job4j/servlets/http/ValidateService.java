@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ValidateService {
 
-    private final Store logic = MemoryStore.getInstance();
+    private final Store logic = DBStore.getInstance();
 
     private final static ValidateService INSTANCE = new ValidateService();
 
@@ -20,7 +20,8 @@ public class ValidateService {
     }
 
     public User add(User user) {
-        return logic.add(user);
+        List<User> users = findAll();
+        return !users.contains(user) ? logic.add(user) : null;
     }
 
     public boolean update(User user) {

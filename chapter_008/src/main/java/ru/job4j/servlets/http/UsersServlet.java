@@ -21,13 +21,8 @@ public class UsersServlet extends HttpServlet {
     private final DispatchFunction dispatchFunction = DispatchFunction.getInstance();
 
     @Override
-    public void init() {
-        this.validateService.add(new User(0, "name1", "login1", "email1"));
-        this.validateService.add(new User(0, "name2", "login2", "email2"));
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
     }
 
     @Override
