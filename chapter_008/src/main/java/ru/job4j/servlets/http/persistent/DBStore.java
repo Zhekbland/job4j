@@ -1,4 +1,4 @@
-package ru.job4j.servlets.http;
+package ru.job4j.servlets.http.persistent;
 
 import net.jcip.annotations.ThreadSafe;
 import org.apache.commons.dbcp2.BasicDataSource;

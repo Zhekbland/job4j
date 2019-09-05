@@ -1,4 +1,8 @@
-package ru.job4j.servlets.http;
+package ru.job4j.servlets.http.logic;
+
+import ru.job4j.servlets.http.persistent.DBStore;
+import ru.job4j.servlets.http.persistent.Store;
+import ru.job4j.servlets.http.persistent.User;
 
 import java.util.List;
 

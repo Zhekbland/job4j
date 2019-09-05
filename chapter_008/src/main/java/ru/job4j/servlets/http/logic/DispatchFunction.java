@@ -1,4 +1,6 @@
-package ru.job4j.servlets.http;
+package ru.job4j.servlets.http.logic;
+
+import ru.job4j.servlets.http.persistent.User;
 
 import java.util.HashMap;
 import java.util.Map;

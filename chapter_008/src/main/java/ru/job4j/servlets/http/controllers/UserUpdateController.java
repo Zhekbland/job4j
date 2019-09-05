@@ -1,5 +1,10 @@
-package ru.job4j.servlets.http;
+package ru.job4j.servlets.http.controllers;
 
+import ru.job4j.servlets.http.logic.DispatchFunction;
+import ru.job4j.servlets.http.persistent.User;
+import ru.job4j.servlets.http.logic.ValidateService;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,20 +12,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * UserCreateServlet show form for create user.
+ * UserUpdateController show form for update user's information.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 3.
+ * @version 4.
  * @since 28.08.2019.
  */
-public class UserCreateServlet extends HttpServlet {
+public class UserUpdateController extends HttpServlet {
 
     private final ValidateService validateService = ValidateService.getInstance();
 
     private final DispatchFunction dispatchFunction = DispatchFunction.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+        User editUser = validateService.findById(Integer.parseInt(id));
+        req.setAttribute("user", editUser);
+        req.getRequestDispatcher("/WEB-INF/views/UserEditView.jsp").forward(req, resp);
     }
 
     @Override
@@ -36,7 +45,7 @@ public class UserCreateServlet extends HttpServlet {
                 new User(Integer.parseInt(id), name, login, email));
         PrintWriter writer = resp.getWriter();
         writer.println(apply);
-        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
         writer.close();
     }
 

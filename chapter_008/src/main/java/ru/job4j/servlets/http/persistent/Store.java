@@ -1,4 +1,4 @@
-package ru.job4j.servlets.http;
+package ru.job4j.servlets.http.persistent;
 
 import java.util.List;
 
