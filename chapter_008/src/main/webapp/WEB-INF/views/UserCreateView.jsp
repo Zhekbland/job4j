@@ -12,6 +12,11 @@
                 <input type="text" name="name" value="Write your name"/>
                 <input type="text" name="login" value="Write your login"/>
                 <input type="text" name="email" value="Write your email"/>
+                <input type="text" name="password" value="Write your password"/>
+                <select name="role">
+                    <option value="ADMIN">Administrator</option>
+                    <option value="USER" selected>User</option>
+                </select>
                 <input type="submit" value="Create"/>
             </form>
         </td>

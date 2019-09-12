@@ -19,6 +19,10 @@ import java.util.Objects;
 public class DBStore implements Store {
 
     private static final BasicDataSource SOURCE = new BasicDataSource();
+
+    /**
+     * Instance of singleton.
+     */
     private static final DBStore INSTANCE = new DBStore();
 
     public DBStore() {
@@ -46,10 +50,13 @@ public class DBStore implements Store {
         Savepoint savepoint = null;
         try {
             connection = SOURCE.getConnection();
-            st = connection.prepareStatement("INSERT INTO store(name, login, email) values(?, ?, ?);");
+            st = connection.prepareStatement("INSERT INTO store(name, login, email, password, role)"
+                    + "values(?, ?, ?, ?, ?);");
             st.setString(1, user.getName());
             st.setString(2, user.getLogin());
             st.setString(3, user.getEmail());
+            st.setString(4, user.getPassword());
+            st.setString(5, user.getRole().toString());
             savepoint = connection.setSavepoint();
             st.executeUpdate();
             user.setId(getId(connection, savepoint));
@@ -91,11 +98,14 @@ public class DBStore implements Store {
         Savepoint savepoint = null;
         try {
             connection = SOURCE.getConnection();
-            st = connection.prepareStatement("UPDATE store SET name = ?, login = ?, email = ? WHERE id = ?;");
+            st = connection.prepareStatement("UPDATE store SET name = ?, login = ?, email = ?, password = ?"
+                    + ",role = ? WHERE id = ?;");
             st.setString(1, user.getName());
             st.setString(2, user.getLogin());
             st.setString(3, user.getEmail());
-            st.setInt(4, user.getId());
+            st.setString(4, user.getPassword());
+            st.setString(5, user.getRole().toString());
+            st.setInt(6, user.getId());
             savepoint = connection.setSavepoint();
             st.execute();
             connection.commit();
@@ -149,7 +159,9 @@ public class DBStore implements Store {
                 result.add(new User(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4)
+                        rs.getString(4),
+                        rs.getString(5),
+                        Role.valueOf(rs.getString(6))
                 ));
             }
             connection.commit();
@@ -181,7 +193,9 @@ public class DBStore implements Store {
                 result = new User(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4)
+                        rs.getString(4),
+                        rs.getString(5),
+                        Role.valueOf(rs.getString(6))
                 );
             }
             connection.commit();
@@ -214,7 +228,8 @@ public class DBStore implements Store {
             savepoint = connection.setSavepoint();
             if (!rs.next()) {
                 st.executeUpdate("create table store (id SERIAL primary key, name varchar(20),"
-                        + "login varchar(20) UNIQUE, email varchar(20))");
+                        + "login varchar(20) UNIQUE, email varchar(20), password varchar(20), role varchar(20))");
+                createAdmin(connection, savepoint);
             }
             connection.commit();
         } catch (SQLException e) {
@@ -225,6 +240,31 @@ public class DBStore implements Store {
             }
         } finally {
             close(connection);
+        }
+    }
+
+    /**
+     * Method creates admin into BD.
+     *
+     * @param connection get connection.
+     * @param savepoint  get savepoint.
+     */
+    private void createAdmin(Connection connection, Savepoint savepoint) {
+        try (PreparedStatement st = connection.prepareStatement("INSERT INTO store(name, login, email, password, role)"
+                + "values(?, ?, ?, ?, ?);")) {
+            st.setString(1, "admin");
+            st.setString(2, "admin");
+            st.setString(3, "admin@gmail.com");
+            st.setString(4, "root");
+            st.setString(5, Role.ADMIN.toString());
+            savepoint = connection.setSavepoint();
+            st.executeUpdate();
+        } catch (SQLException e) {
+            try {
+                connection.rollback(savepoint);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

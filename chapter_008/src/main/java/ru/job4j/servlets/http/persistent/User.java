@@ -15,12 +15,25 @@ public class User {
     private String name;
     private String login;
     private String email;
+    private String password;
+    private Role role;
 
-    public User(int id, String name, String login, String email) {
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(int id, String name, String login, String email, String password, Role role) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getName() {
@@ -37,6 +50,10 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public void setId(int id) {
