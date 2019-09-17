@@ -33,6 +33,16 @@
             }
             return result;
         }
+
+        function addRow() {
+            if (validate()) {
+                let rowCount = $('tbody th').length + 1;
+                let data = $(".form-control");
+                $('tbody')
+                    .append('<tr><th scope="row">' + rowCount + '</th><td>' + data[0].value + '</td><td>'
+                        + data[1].value + '</td><td>' + data[2].value + '</td></tr>');
+            }
+        }
     </script>
 </head>
 
@@ -65,11 +75,11 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" name="description" id="exampleFormControlTextarea1"
+                    <label for="textarea1">Description</label>
+                    <textarea class="form-control" name="description" id="textarea1"
                               placeholder="Write description" rows="5"></textarea>
                 </div>
-                <button type="submit" class="btn btn-secondary" onclick="return validate()">Submit</button>
+                <button type="button" class="btn btn-secondary" onclick="return addRow()">Submit</button>
             </form>
         </div>
     </div>
@@ -90,18 +100,6 @@
             <th scope="row">1</th>
             <td>Mark</td>
             <td>Otto</td>
-            <td>a statement or a piece of writing that tells what something or someone is like</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>a statement or a piece of writing that tells what something or someone is like</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
             <td>a statement or a piece of writing that tells what something or someone is like</td>
         </tr>
         </tbody>
