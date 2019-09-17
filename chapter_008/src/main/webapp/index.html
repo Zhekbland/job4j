@@ -22,11 +22,23 @@
             font-family: 'Roboto', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
     </style>
+    <script>
+        function validate() {
+            for (let input of $(".form-control")) {
+                var result = true;
+                if (input.value == '') {
+                    alert("Fill " + input.getAttribute('name') + " form!");
+                    result = false;
+                }
+            }
+            return result;
+        }
+    </script>
 </head>
 
 <body>
 <div class="container">
-    <div class="row mt-4">
+    <div class="row my-4">
         <div class="col-3">
             <form>
                 <div class="form-group">
@@ -54,9 +66,10 @@
                 <br>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                    <textarea class="form-control" name="description" id="exampleFormControlTextarea1"
+                              placeholder="Write description" rows="5"></textarea>
                 </div>
-                <button type="submit" class="btn btn-light">Submit</button>
+                <button type="submit" class="btn btn-secondary" onclick="return validate()">Submit</button>
             </form>
         </div>
     </div>
