@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
@@ -34,13 +32,47 @@
             return result;
         }
 
-        function addRow() {
+        function updateTable() {
+            $.ajax({
+                url: 'http://localhost:8080/chapter_008/json',
+                method: 'get',
+                contentType: 'text/json',
+                complete: function (data) {
+                    clearTable();
+                    let users = JSON.parse(data.responseText);
+                    for (let i = 0; i < users.length; i++) {
+                        $('tbody').append('<tr><th scope="row">' + users[i].id + '</th><td>' + users[i].name + '</td><td>'
+                            + users[i].surname + '</td><td>' + users[i].gender + '</td><td>'
+                            + users[i].description + '</td></tr>');
+                    }
+                }
+            });
+        }
+
+        function clearTable() {
+            $('tbody').empty();
+        }
+
+        function send() {
             if (validate()) {
-                let rowCount = $('tbody th').length + 1;
                 let data = $(".form-control");
-                $('tbody')
-                    .append('<tr><th scope="row">' + rowCount + '</th><td>' + data[0].value + '</td><td>'
-                        + data[1].value + '</td><td>' + data[2].value + '</td></tr>');
+                let genderCheck = $('input:checked')[0].value;
+                let user = {
+                    id: 0,
+                    name: data[0].value,
+                    surname: data[1].value,
+                    gender: genderCheck,
+                    description: data[2].value
+                };
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost:8080/chapter_008/json',
+                    dataType: 'json',
+                    data: JSON.stringify(user),
+                    complete: function () {
+                        updateTable();
+                    }
+                });
             }
         }
     </script>
@@ -79,29 +111,25 @@
                     <textarea class="form-control" name="description" id="textarea1"
                               placeholder="Write description" rows="5"></textarea>
                 </div>
-                <button type="button" class="btn btn-secondary" onclick="return addRow()">Submit</button>
+                <button type="button" class="btn btn-secondary" onclick="return send()">AJAX</button>
             </form>
         </div>
     </div>
 </div>
 
 <div class="container">
+    <script>updateTable()</script>
     <table class="table">
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Surname</th>
+            <th scope="col">Gender</th>
             <th scope="col">Description</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>a statement or a piece of writing that tells what something or someone is like</td>
-        </tr>
         </tbody>
     </table>
 </div>

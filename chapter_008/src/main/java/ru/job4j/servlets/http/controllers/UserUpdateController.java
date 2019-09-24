@@ -55,7 +55,7 @@ public class UserUpdateController extends HttpServlet {
 
         dispatchFunction.actionChecker(action,
                 new User(Integer.parseInt(id), name, login, email, password, Role.valueOf(role)));
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/users", req.getContextPath()));
     }
 
     /**

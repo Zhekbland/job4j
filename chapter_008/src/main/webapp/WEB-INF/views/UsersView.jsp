@@ -12,7 +12,7 @@
                     <c:out value="${user.toString()}"/>
                 </td>
                 <td valign="middle " align="center">
-                    <form action="${pageContext.servletContext.contextPath}/" method="post">
+                    <form action="${pageContext.servletContext.contextPath}/users" method="post">
                         <input type="hidden" name="action" value="delete"/>
                         <input type="hidden" name="id" value="<c:out value="${user.id}"/>"/>
                         <input type="hidden" name="role" value="<c:out value="${user.role}"/>"/>

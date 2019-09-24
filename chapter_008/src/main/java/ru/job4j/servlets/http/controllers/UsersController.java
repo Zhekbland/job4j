@@ -36,18 +36,16 @@ public class UsersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         HttpSession session = req.getSession();
-        synchronized (session) {
-            String login = (String) session.getAttribute("login");
-            User activeUser = validateService.findByLogin(login);
-            session.setAttribute("userRole", activeUser.getRole());
-            if (activeUser.getRole().equals(Role.ADMIN)) {
-                req.setAttribute("users", validateService.findAll());
-            } else {
-                req.setAttribute("user", activeUser);
-            }
-            req.setAttribute("userRole", session.getAttribute("userRole"));
-            req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
+        String login = (String) session.getAttribute("login");
+        User activeUser = validateService.findByLogin(login);
+        session.setAttribute("userRole", activeUser.getRole());
+        if (activeUser.getRole().equals(Role.ADMIN)) {
+            req.setAttribute("users", validateService.findAll());
+        } else {
+            req.setAttribute("user", activeUser);
         }
+        req.setAttribute("userRole", session.getAttribute("userRole"));
+        req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
     }
 
     @Override
@@ -62,7 +60,7 @@ public class UsersController extends HttpServlet {
         String role = getStringParameters(req, "role");
         dispatchFunction.actionChecker(action,
                 new User(Integer.parseInt(id), name, login, email, password, Role.valueOf(role)));
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/users", req.getContextPath()));
     }
 
     /**
