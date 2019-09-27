@@ -1,21 +1,17 @@
 package ru.job4j.servlets.http.persistent;
 
-import net.jcip.annotations.ThreadSafe;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Class DBStore creates DB and does many actions.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 2.
+ * @version 4.
  * @since 04.09.2019.
  */
-@ThreadSafe
 public class DBStore implements Store {
 
     private static final BasicDataSource SOURCE = new BasicDataSource();
@@ -43,20 +39,21 @@ public class DBStore implements Store {
 
 
     @Override
-
     public User add(User user) {
         Connection connection = null;
         PreparedStatement st;
         Savepoint savepoint = null;
         try {
             connection = SOURCE.getConnection();
-            st = connection.prepareStatement("INSERT INTO store(name, login, email, password, role)"
-                    + "values(?, ?, ?, ?, ?);");
+            st = connection.prepareStatement("INSERT INTO store(name, login, email, password, role, country, city)"
+                    + "values(?, ?, ?, ?, ?, ?, ?);");
             st.setString(1, user.getName());
             st.setString(2, user.getLogin());
             st.setString(3, user.getEmail());
             st.setString(4, user.getPassword());
             st.setString(5, user.getRole().toString());
+            st.setString(6, user.getCountry());
+            st.setString(7, user.getCity());
             savepoint = connection.setSavepoint();
             st.executeUpdate();
             user.setId(getId(connection, savepoint));
@@ -99,13 +96,15 @@ public class DBStore implements Store {
         try {
             connection = SOURCE.getConnection();
             st = connection.prepareStatement("UPDATE store SET name = ?, login = ?, email = ?, password = ?"
-                    + ",role = ? WHERE id = ?;");
+                    + ",role = ?, country = ?, city = ? WHERE id = ?;");
             st.setString(1, user.getName());
             st.setString(2, user.getLogin());
             st.setString(3, user.getEmail());
             st.setString(4, user.getPassword());
             st.setString(5, user.getRole().toString());
-            st.setInt(6, user.getId());
+            st.setString(6, user.getCountry());
+            st.setString(7, user.getCity());
+            st.setInt(8, user.getId());
             savepoint = connection.setSavepoint();
             st.execute();
             connection.commit();
@@ -156,13 +155,12 @@ public class DBStore implements Store {
             rs = st.executeQuery("SELECT * FROM store");
             savepoint = connection.setSavepoint();
             while (rs.next()) {
-                result.add(new User(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        Role.valueOf(rs.getString(6))
-                ));
+                User user = new User(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        Role.valueOf(rs.getString(6)));
+                user.setCountry(rs.getString(7));
+                user.setCity(rs.getString(8));
+                result.add(user);
             }
             connection.commit();
         } catch (SQLException e) {
@@ -190,13 +188,12 @@ public class DBStore implements Store {
             rs = st.executeQuery("SELECT * FROM store WHERE id = " + id + ";");
             savepoint = connection.setSavepoint();
             while (rs.next()) {
-                result = new User(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        Role.valueOf(rs.getString(6))
-                );
+                User user = new User(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        Role.valueOf(rs.getString(6)));
+                user.setCountry(rs.getString(7));
+                user.setCity(rs.getString(8));
+                result = user;
             }
             connection.commit();
         } catch (SQLException e) {
@@ -228,7 +225,8 @@ public class DBStore implements Store {
             savepoint = connection.setSavepoint();
             if (!rs.next()) {
                 st.executeUpdate("create table store (id SERIAL primary key, name varchar(20),"
-                        + "login varchar(20) UNIQUE, email varchar(20), password varchar(20), role varchar(20))");
+                        + "login varchar(20) UNIQUE, email varchar(20), password varchar(20), role varchar(20),"
+                        + "country varchar(15), city varchar(15));");
                 createAdmin(connection, savepoint);
             }
             connection.commit();
@@ -250,13 +248,15 @@ public class DBStore implements Store {
      * @param savepoint  get savepoint.
      */
     private void createAdmin(Connection connection, Savepoint savepoint) {
-        try (PreparedStatement st = connection.prepareStatement("INSERT INTO store(name, login, email, password, role)"
-                + "values(?, ?, ?, ?, ?);")) {
+        try (PreparedStatement st = connection.prepareStatement("INSERT INTO store(name, login, email, password, role,"
+                + "country, city) values(?, ?, ?, ?, ?, ?, ?);")) {
             st.setString(1, "admin");
             st.setString(2, "admin");
             st.setString(3, "admin@gmail.com");
             st.setString(4, "root");
             st.setString(5, Role.ADMIN.toString());
+            st.setString(6, "Russia");
+            st.setString(7, "Moscow");
             savepoint = connection.setSavepoint();
             st.executeUpdate();
         } catch (SQLException e) {

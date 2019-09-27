@@ -12,13 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * UsersController show all users in table
  * and create button for create, delete, update.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 4.
+ * @version 5.
  * @since 28.08.2019.
  */
 public class UsersController extends HttpServlet {
@@ -40,7 +42,9 @@ public class UsersController extends HttpServlet {
         User activeUser = validateService.findByLogin(login);
         session.setAttribute("userRole", activeUser.getRole());
         if (activeUser.getRole().equals(Role.ADMIN)) {
-            req.setAttribute("users", validateService.findAll());
+            Map<Integer, User> users = new TreeMap<>();
+            validateService.findAll().forEach(user -> users.put(user.getId(), user));
+            req.setAttribute("users", users.values());
         } else {
             req.setAttribute("user", activeUser);
         }
@@ -58,8 +62,12 @@ public class UsersController extends HttpServlet {
         String email = getStringParameters(req, "email");
         String password = getStringParameters(req, "password");
         String role = getStringParameters(req, "role");
-        dispatchFunction.actionChecker(action,
-                new User(Integer.parseInt(id), name, login, email, password, Role.valueOf(role)));
+        String country = getStringParameters(req, "country");
+        String city = getStringParameters(req, "city");
+        User user = new User(Integer.parseInt(id), name, login, email, password, Role.valueOf(role));
+        user.setCountry(country);
+        user.setCity(city);
+        dispatchFunction.actionChecker(action, user);
         resp.sendRedirect(String.format("%s/users", req.getContextPath()));
     }
 

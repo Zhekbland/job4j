@@ -14,7 +14,7 @@ import java.io.IOException;
  * Class SignInController does signIn.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 4.
+ * @version 5.
  * @since 28.08.2019.
  */
 public class SignInController extends HttpServlet {
@@ -35,7 +35,7 @@ public class SignInController extends HttpServlet {
         if (validateService.isCredentional(login, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("login", login);
-            response.sendRedirect(String.format("%s/", request.getContextPath()));
+            response.sendRedirect(String.format("%s/users", request.getContextPath()));
         } else {
             request.setAttribute("error", "Credentional invalid");
             doGet(request, response);

@@ -16,7 +16,7 @@ import java.io.IOException;
  * UserCreateController show form for create user.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 4.
+ * @version 5.
  * @since 28.08.2019.
  */
 public class UserCreateController extends HttpServlet {
@@ -46,9 +46,12 @@ public class UserCreateController extends HttpServlet {
         String email = getStringParameters(req, "email");
         String password = getStringParameters(req, "password");
         String role = getStringParameters(req, "role");
-
-        dispatchFunction.actionChecker(action,
-                new User(Integer.parseInt(id), name, login, email, password, Role.valueOf(role)));
+        String country = getStringParameters(req, "country");
+        String city = getStringParameters(req, "city");
+        User user = new User(Integer.parseInt(id), name, login, email, password, Role.valueOf(role));
+        user.setCountry(country);
+        user.setCity(city);
+        dispatchFunction.actionChecker(action, user);
         resp.sendRedirect(String.format("%s/users", req.getContextPath()));
     }
 

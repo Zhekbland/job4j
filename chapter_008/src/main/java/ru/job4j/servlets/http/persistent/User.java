@@ -6,8 +6,8 @@ import java.util.Objects;
  * Class User creates instances of users.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 4.
- * @since 21.08.2019.
+ * @version 5.
+ * @since 27.09.2019.
  */
 public class User {
 
@@ -17,6 +17,8 @@ public class User {
     private String email;
     private String password;
     private Role role;
+    private String country;
+    private String city;
 
     public User(String login, String password) {
         this.login = login;
@@ -31,6 +33,17 @@ public class User {
         this.password = password;
         this.role = role;
     }
+
+//    public User(int id, String name, String login, String email, String password, Role role, String country, String city) {
+//        this.id = id;
+//        this.name = name;
+//        this.login = login;
+//        this.email = email;
+//        this.password = password;
+//        this.role = role;
+//        this.country = country;
+//        this.city = city;
+//    }
 
     public String getPassword() {
         return password;
@@ -56,8 +69,24 @@ public class User {
         return role;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Override

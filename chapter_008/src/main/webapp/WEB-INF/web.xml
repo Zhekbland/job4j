@@ -4,16 +4,47 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
+    <!--Filter-->
+    <filter>
+        <filter-name>Filter</filter-name>
+        <filter-class>ru.job4j.servlets.http.controllers.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Filter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 
-    <!--    <filter>-->
-    <!--        <filter-name>Filter</filter-name>-->
-    <!--        <filter-class>ru.job4j.servlets.http.controllers.AuthFilter</filter-class>-->
-    <!--    </filter>-->
-    <!--    <filter-mapping>-->
-    <!--        <filter-name>Filter</filter-name>-->
-    <!--        <url-pattern>*</url-pattern>-->
-    <!--    </filter-mapping>-->
+    <!--Country controller-->
+    <servlet>
+        <servlet-name>country</servlet-name>
+        <servlet-class>ru.job4j.servlets.http.controllers.CountryController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>country</servlet-name>
+        <url-pattern>/country</url-pattern>
+    </servlet-mapping>
 
+    <!--City controller-->
+    <servlet>
+        <servlet-name>city</servlet-name>
+        <servlet-class>ru.job4j.servlets.http.controllers.CityController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>city</servlet-name>
+        <url-pattern>/city</url-pattern>
+    </servlet-mapping>
+
+    <!--JSON controller-->
     <servlet>
         <servlet-name>JSON</servlet-name>
         <servlet-class>ru.job4j.servlets.ajax.JSONController</servlet-class>
@@ -28,6 +59,7 @@
         <url-pattern>/json</url-pattern>
     </servlet-mapping>
 
+    <!--Echo test servlet-->
     <servlet>
         <servlet-name>InternalServlet</servlet-name>
         <servlet-class>ru.job4j.servlets.EchoServlet</servlet-class>
@@ -42,6 +74,7 @@
         <url-pattern>/echo</url-pattern>
     </servlet-mapping>
 
+    <!--Users controller-->
     <servlet>
         <servlet-name>UsersController</servlet-name>
         <servlet-class>ru.job4j.servlets.http.controllers.UsersController</servlet-class>
@@ -56,6 +89,7 @@
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
+    <!--User Create controller-->
     <servlet>
         <servlet-name>UserCreateServlet</servlet-name>
         <servlet-class>ru.job4j.servlets.http.controllers.UserCreateController</servlet-class>
@@ -70,6 +104,7 @@
         <url-pattern>/create</url-pattern>
     </servlet-mapping>
 
+    <!--User Update controller-->
     <servlet>
         <servlet-name>UserUpdateServlet</servlet-name>
         <servlet-class>ru.job4j.servlets.http.controllers.UserUpdateController</servlet-class>
@@ -84,6 +119,7 @@
         <url-pattern>/edit</url-pattern>
     </servlet-mapping>
 
+    <!--Sign In controller-->
     <servlet>
         <servlet-name>SignIn</servlet-name>
         <servlet-class>ru.job4j.servlets.http.controllers.SignInController</servlet-class>
@@ -98,6 +134,7 @@
         <url-pattern>/signin</url-pattern>
     </servlet-mapping>
 
+    <!--Sign Out controller-->
     <servlet>
         <servlet-name>SignOut</servlet-name>
         <servlet-class>ru.job4j.servlets.http.controllers.SignOutController</servlet-class>
