@@ -38,7 +38,7 @@ public class ValidateService implements Validate {
 
     @Override
     public boolean update(User user) {
-        boolean result = findById(user.getId()) != null;
+        boolean result = findByLogin(user.getLogin()) != null;
         if (result) {
             logic.update(user);
         }
@@ -67,7 +67,7 @@ public class ValidateService implements Validate {
     @Override
     public User findByLogin(String login) {
         return this.logic.findAll().parallelStream().filter(user -> user.getLogin().equals(login)).findFirst()
-                .orElseThrow();
+                .orElse(null);
     }
 
     @Override

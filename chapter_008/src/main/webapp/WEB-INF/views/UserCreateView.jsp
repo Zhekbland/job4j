@@ -74,6 +74,29 @@
             }
             return result;
         }
+
+        function postData() {
+            if (validate()) {
+                let user = $('.form-control');
+                $.ajax({
+                    url: 'http://localhost:8080/chapter_008/create',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: JSON.stringify({
+                        name: user[0].value,
+                        login: user[1].value,
+                        email: user[2].value,
+                        password: user[3].value,
+                        role: user[4].value,
+                        country: user[5].value,
+                        city: user[6].value,
+                    }),
+                    complete: function () {
+                        window.location.href = 'http://localhost:8080/chapter_008/users';
+                    }
+                });
+            }
+        }
     </script>
 </head>
 <body>
@@ -81,7 +104,6 @@
     <div class="row my-4">
         <div class="col-3">
             <form action="${pageContext.servletContext.contextPath}/create" method="post">
-                <input type="hidden" name="action" value="add"/>
                 <div class="form-group">
                     <label for="name_input">Name</label>
                     <input id="name_input" type="text" class="form-control" name="name" placeholder="Enter name">
@@ -123,7 +145,7 @@
                 </div>
 
                 <div class="my-5">
-                    <button type="submit" class="btn btn-secondary" onclick="return validate()">Create</button>
+                    <button type="button" class="btn btn-secondary" onclick="return postData()">Create</button>
                 </div>
             </form>
         </div>

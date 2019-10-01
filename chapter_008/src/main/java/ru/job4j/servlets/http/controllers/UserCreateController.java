@@ -1,7 +1,7 @@
 package ru.job4j.servlets.http.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.job4j.servlets.http.logic.DispatchFunction;
-import ru.job4j.servlets.http.persistent.Role;
 import ru.job4j.servlets.http.persistent.User;
 import ru.job4j.servlets.http.logic.ValidateService;
 import ru.job4j.servlets.http.persistent.Validate;
@@ -38,32 +38,9 @@ public class UserCreateController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-        String action = getStringParameters(req, "action");
-        String id = getStringParameters(req, "id");
-        String name = getStringParameters(req, "name");
-        String login = getStringParameters(req, "login");
-        String email = getStringParameters(req, "email");
-        String password = getStringParameters(req, "password");
-        String role = getStringParameters(req, "role");
-        String country = getStringParameters(req, "country");
-        String city = getStringParameters(req, "city");
-        User user = new User(Integer.parseInt(id), name, login, email, password, Role.valueOf(role));
-        user.setCountry(country);
-        user.setCity(city);
-        dispatchFunction.actionChecker(action, user);
-        resp.sendRedirect(String.format("%s/users", req.getContextPath()));
-    }
-
-    /**
-     * Fills empty fields.
-     *
-     * @param req  - request.
-     * @param name - name of param.
-     * @return result.
-     */
-    private String getStringParameters(HttpServletRequest req, String name) {
-        String result = req.getParameter(name);
-        return result != null ? result : "0";
+        resp.setContentType("text/json");
+        ObjectMapper mapper = new ObjectMapper();
+        User user = mapper.readValue(req.getReader().readLine(), User.class);
+        dispatchFunction.actionChecker("add", user);
     }
 }

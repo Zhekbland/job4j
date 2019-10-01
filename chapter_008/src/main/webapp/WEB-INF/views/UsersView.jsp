@@ -19,6 +19,25 @@
             font-family: 'Roboto', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
     </style>
+    <script>
+        function deleteUser(userId) {
+            $.ajax({
+                url: 'http://localhost:8080/chapter_008/users',
+                method: 'POST',
+                dataType: 'JSON',
+                data: JSON.stringify({id: userId}),
+                complete: function () {
+                    $('#' + userId).empty();
+                }
+            });
+            // let user = $('.form-controller');
+            // for (let some of user) {
+
+            // console.log($('#' + userId));
+            // $('#' + userId).empty();
+            // }
+        }
+    </script>
 </head>
 <body>
 <c:if test="${userRole == 'ADMIN'}">
@@ -46,7 +65,7 @@
             </thead>
             <tbody>
             <c:forEach items="${users}" var="user">
-                <tr>
+                <tr id="<c:out value="${user.id}"/>">
                     <th scope="row">${user.id}</th>
                     <td>
                         <c:out value="${user.role}"/>
@@ -74,14 +93,20 @@
                     </td>
                     <td>
                         <form action="${pageContext.servletContext.contextPath}/users" method="post">
-                            <input type="hidden" name="action" value="delete"/>
-                            <input type="hidden" name="id" value="<c:out value="${user.id}"/>"/>
-                            <input type="hidden" name="role" value="<c:out value="${user.role}"/>"/>
+                                <%--                            <div class="form-controller">--%>
+                                <%--                                <input type="hidden" name="action" value="delete"/>--%>
+                                <%--                            </div>--%>
+                                <%--                            <div class="form-controller">--%>
+                                <%--                                <input type="hidden" name="id" value="<c:out value="${user.id}"/>"/>--%>
+                                <%--                            </div>--%>
+                                <%--                            <input type="hidden" name="role" value="<c:out value="${user.role}"/>"/>--%>
                             <c:if test="${user.role == 'ADMIN'}">
-                                <button disabled type="submit" class="btn btn-secondary">Delete</button>
+                                <button disabled type="button" class="btn btn-secondary">Delete</button>
                             </c:if>
                             <c:if test="${user.role == 'USER'}">
-                                <button type="submit" class="btn btn-secondary">Delete</button>
+                                <button type="button" class="btn btn-secondary"
+                                        onclick="return deleteUser(<c:out value="${user.id}"/>)">Delete
+                                </button>
                             </c:if>
                         </form>
                     </td>
@@ -123,7 +148,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr id="<c:out value="${user.id}"/>">
                 <th scope="row">${user.id}</th>
                 <td>
                     <c:out value="${user.role}"/>
@@ -151,14 +176,16 @@
                 </td>
                 <td>
                     <form action="${pageContext.servletContext.contextPath}/users" method="post">
-                        <input type="hidden" name="action" value="delete"/>
-                        <input type="hidden" name="id" value="<c:out value="${user.id}"/>"/>
-                        <input type="hidden" name="role" value="<c:out value="${user.role}"/>"/>
+                            <%--                        <input type="hidden" name="action" value="delete"/>--%>
+                            <%--                        <input type="hidden" name="id" value="<c:out value="${user.id}"/>"/>--%>
+                            <%--                        <input type="hidden" name="role" value="<c:out value="${user.role}"/>"/>--%>
                         <c:if test="${user.role == 'ADMIN'}">
-                            <button type="submit" class="btn btn-secondary">Delete</button>
+                            <button type="button" class="btn btn-secondary"
+                                    onclick="return deleteUser(<c:out value="${user.id}"/>)">Delete
+                            </button>
                         </c:if>
                         <c:if test="${user.role == 'USER'}">
-                            <button disabled type="submit" class="btn btn-secondary">Delete</button>
+                            <button disabled type="button" class="btn btn-secondary">Delete</button>
                         </c:if>
                     </form>
                 </td>

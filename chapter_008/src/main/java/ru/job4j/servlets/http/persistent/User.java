@@ -20,6 +20,14 @@ public class User {
     private String country;
     private String city;
 
+    public User() {
+
+    }
+
+    public User(int id) {
+        this.id = id;
+    }
+
     public User(String login, String password) {
         this.login = login;
         this.password = password;
@@ -34,16 +42,15 @@ public class User {
         this.role = role;
     }
 
-//    public User(int id, String name, String login, String email, String password, Role role, String country, String city) {
-//        this.id = id;
-//        this.name = name;
-//        this.login = login;
-//        this.email = email;
-//        this.password = password;
-//        this.role = role;
-//        this.country = country;
-//        this.city = city;
-//    }
+    public User(String name, String login, String email, String password, Role role, String country, String city) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.country = country;
+        this.city = city;
+    }
 
     public String getPassword() {
         return password;

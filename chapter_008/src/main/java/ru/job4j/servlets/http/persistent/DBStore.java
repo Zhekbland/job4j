@@ -96,7 +96,7 @@ public class DBStore implements Store {
         try {
             connection = SOURCE.getConnection();
             st = connection.prepareStatement("UPDATE store SET name = ?, login = ?, email = ?, password = ?"
-                    + ",role = ?, country = ?, city = ? WHERE id = ?;");
+                    + ",role = ?, country = ?, city = ? WHERE login = ?;");
             st.setString(1, user.getName());
             st.setString(2, user.getLogin());
             st.setString(3, user.getEmail());
@@ -104,7 +104,7 @@ public class DBStore implements Store {
             st.setString(5, user.getRole().toString());
             st.setString(6, user.getCountry());
             st.setString(7, user.getCity());
-            st.setInt(8, user.getId());
+            st.setString(8, user.getLogin());
             savepoint = connection.setSavepoint();
             st.execute();
             connection.commit();
