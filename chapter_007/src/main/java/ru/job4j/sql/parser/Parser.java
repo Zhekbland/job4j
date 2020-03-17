@@ -8,6 +8,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class Parser parse, get information of vacancies from sql.ru.
@@ -179,9 +181,10 @@ public class Parser {
             try {
                 Document page = Jsoup.connect(URL + actualPage).get();
                 Element lastTdWithYear = page.selectFirst("table[class=forumTable]").select("td").last();
+//                Integer yearOfLastVacancyOnPage = Integer.parseInt(lastTdWithYear.text().substring(6, 9).trim());
+                Integer yearOfLastVacancyOnPage = parseYearFromVacancy(lastTdWithYear);
                 Integer currentYear = Integer.parseInt(LocalDate.now().toString().substring(2, 4).trim());
-                Integer yearOfVacancy = Integer.parseInt(lastTdWithYear.text().substring(6, 8).trim());
-                if (yearOfVacancy < currentYear) {
+                if (yearOfLastVacancyOnPage < currentYear) {
                     result = actualPage;
                     break;
                 }
@@ -193,6 +196,16 @@ public class Parser {
         return result;
     }
 
+    private Integer parseYearFromVacancy(Element lastTdWithYear) {
+        String date = lastTdWithYear.text();
+        Integer yearOfVacancy = null;
+        Matcher matcher = Pattern.compile("(\\s+)([1-9][0-9])(\\,)").matcher(date);
+        while (matcher.find()) {
+            yearOfVacancy = Integer.parseInt(matcher.group(2));
+        }
+        return yearOfVacancy;
+    }
+
     /**
      * Compare two lists of vacancy and leave only unique and new elements.
      *
@@ -201,11 +214,13 @@ public class Parser {
      */
     public List<Vacancy> updateList(List<Vacancy> oldList) {
         List<Vacancy> freshList = fillList();
-        Iterator<Vacancy> itr = freshList.listIterator();
-        for (Vacancy vacancyNew : oldList) {
-            while (itr.hasNext()) {
-                if (itr.next().getNameOfVacancy().equals(vacancyNew.getNameOfVacancy())) {
-                    itr.remove();
+        freshList.sort(Comparator.comparing(Vacancy::getNameOfVacancy));
+        oldList.sort(Comparator.comparing(Vacancy::getNameOfVacancy));
+        Iterator<Vacancy> newVacancyList = freshList.listIterator();
+        for (Vacancy oldVacancy : oldList) {
+            while (newVacancyList.hasNext()) {
+                if (newVacancyList.next().getNameOfVacancy().equals(oldVacancy.getNameOfVacancy())) {
+                    newVacancyList.remove();
                     break;
                 }
             }
