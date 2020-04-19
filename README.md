@@ -198,7 +198,7 @@
 
 ### 8.1) [Трекер пользователей с web интерфейсом](https://github.com/zhekbland/heroku_tracker/tree/master/src/main)
 ### [Tracker on Heroku](https://zhekbland-servlets.herokuapp.com/)
-### [Tracker on AWS](http://tracker.eu-west-2.elasticbeanstalk.com/)
+### [Tracker on AWS](http://tracker.eu-west-2.elasticbeanstalk.com/) (EC2 stopped)
 
 Для тестирования:
 Login: admin Password: root
